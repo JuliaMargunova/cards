@@ -9,7 +9,7 @@ const meta = {
   component: TextField,
   tags: ['autodocs'],
   argTypes: {
-    variant: {
+    type: {
       options: ['text', 'search', 'password'],
       control: { type: 'radio' },
     },
@@ -43,7 +43,7 @@ export const Password = {
 
     return (
       <TextField
-        variant={'password'}
+        type={'password'}
         placeholder="Placeholder"
         label="Password text field"
         value={state}
@@ -60,7 +60,7 @@ export const Search = {
 
     return (
       <TextField
-        variant={'search'}
+        type={'search'}
         placeholder="Placeholder"
         label="Search text field"
         value={state}
@@ -81,7 +81,7 @@ export const TextWithError: Story = {
 
 export const DisabledPassword: Story = {
   args: {
-    variant: 'password',
+    type: 'password',
     placeholder: 'Placeholder',
     label: 'Disabled password text field',
     disabled: true,
@@ -90,7 +90,7 @@ export const DisabledPassword: Story = {
 
 export const DisabledSearch: Story = {
   args: {
-    variant: 'search',
+    type: 'search',
     placeholder: 'Placeholder',
     label: 'Disabled search text field',
     disabled: true,

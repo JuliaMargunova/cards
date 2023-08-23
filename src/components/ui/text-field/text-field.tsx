@@ -1,4 +1,4 @@
-import { ComponentProps, forwardRef, useEffect, useState, KeyboardEvent } from 'react'
+import { ComponentProps, forwardRef, useState, KeyboardEvent } from 'react'
 
 import classNames from 'classnames'
 
@@ -8,7 +8,7 @@ import { Icon } from '@/components/ui/icon/icon.tsx'
 import { Typography } from '@/components/ui/typography'
 
 export type TextFieldProps = {
-  variant?: 'search' | 'text' | 'password'
+  type?: 'search' | 'text' | 'password'
   label?: string
   errorMessage?: string
   className?: string
@@ -21,26 +21,19 @@ type PropsType = TextFieldProps & Omit<ComponentProps<'input'>, keyof TextFieldP
 
 export const TextField = forwardRef<HTMLInputElement, PropsType>(
   (
-    { variant = 'text', errorMessage, className, onEnter, onKeyDown, clearField, label, ...rest },
+    { type = 'text', errorMessage, className, onEnter, onKeyDown, clearField, label, ...rest },
     ref
   ) => {
-    const [showPassword, setShowPassword] = useState(false)
-
-    const [currentType, setCurrentType] = useState(variant)
+    const [currentType, setCurrentType] = useState(type)
 
     const displayClearButton = clearField && rest.value
 
     const error = !!errorMessage?.length
 
-    useEffect(() => {
-      if (variant === 'password') {
-        if (showPassword) setCurrentType('text')
-        else setCurrentType('password')
-      }
-    }, [variant, showPassword])
-
     const showPasswordHandler = () => {
-      showPassword ? setShowPassword(false) : setShowPassword(true)
+      if (type === 'password') {
+        setCurrentType(prevState => (prevState === 'text' ? 'password' : 'text'))
+      }
     }
 
     const keyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -53,7 +46,7 @@ export const TextField = forwardRef<HTMLInputElement, PropsType>(
     })
 
     const inputClasses = classNames(className, s.input, {
-      [s.search]: variant === 'search',
+      [s.search]: type === 'search',
       [s.filled]: rest.value,
       [s.error]: error,
     })
@@ -65,26 +58,28 @@ export const TextField = forwardRef<HTMLInputElement, PropsType>(
 
     return (
       <div className={s.root}>
-        <Typography variant="body2" className={labelClasses}>
-          {label}
-        </Typography>
+        {label && (
+          <Typography variant="body2" className={labelClasses}>
+            {label}
+          </Typography>
+        )}
         <div className={s.container}>
           <input
             className={inputClasses}
-            type={variant === 'password' ? currentType : rest.type}
+            type={type === 'password' ? currentType : 'text'}
             ref={ref}
             {...rest}
             onKeyDown={keyHandler}
           />
-          {variant === 'password' && (
+          {type === 'password' && (
             <button className={s.button} onClick={showPasswordHandler} disabled={rest.disabled}>
-              {showPassword ? <Icon name="eyeOff" /> : <Icon name="eye" />}
+              {currentType === 'text' ? <Icon name="eyeOff" /> : <Icon name="eye" />}
             </button>
           )}
-          {variant === 'search' && (
+          {type === 'search' && (
             <Icon name="search" width={20} height={20} className={searchIconClasses} />
           )}
-          {variant === 'search' && displayClearButton && (
+          {type === 'search' && displayClearButton && (
             <button className={s.button} onClick={clearField} disabled={rest.disabled}>
               <Icon name="cross" width={16} height={16} />
             </button>
