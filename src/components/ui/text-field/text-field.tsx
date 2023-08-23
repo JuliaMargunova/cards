@@ -17,7 +17,9 @@ export type TextFieldProps = {
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void
 } & ComponentProps<'input'>
 
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
+type PropsType = TextFieldProps & Omit<ComponentProps<'input'>, keyof TextFieldProps>
+
+export const TextField = forwardRef<HTMLInputElement, PropsType>(
   (
     { variant = 'text', errorMessage, className, onEnter, onKeyDown, clearField, label, ...rest },
     ref
