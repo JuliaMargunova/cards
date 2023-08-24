@@ -7,10 +7,10 @@ interface CardProps {
   className?: string
 }
 
-export const Card: FC<CardProps> = ({ children, className }) => {
+export const Card: FC<CardProps> = ({ children, className, ...rest }) => {
   return (
-    <div className={s.box}>
-      <div className={`${s.container} ${className}`}> {children}</div>
+    <div className={`${s.container} ${className}`} {...rest}>
+      {children}
     </div>
   )
 }
