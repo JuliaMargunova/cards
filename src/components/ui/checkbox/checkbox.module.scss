@@ -22,21 +22,22 @@
   align-items: center;
   justify-content: center;
 
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
 
   background-color: var(--color-dark-900);
   border: 2px solid var(--color-light-900);
   border-radius: 4px;
 
-  &:focus-visible {
-    background-color: var(--color-dark-500);
-  }
-
   &:disabled {
     cursor: auto;
     background-color: var(--color-light-700);
     border-color: var(--color-dark-100);
+  }
+
+  &:focus {
+    background-color: var(--color-dark-500);
+    outline: none;
   }
 }
 
@@ -47,13 +48,16 @@
   align-items: center;
   justify-content: center;
 
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
 
   background-color: inherit;
   border-radius: 100%;
 
-  // &:focus-within,
+  &:focus-within {
+    background-color: var(--color-dark-500);
+  }
+
   &:hover:not(.disabled),
   &:hover .checkbox:not([data-state='checked']) {
     background-color: var(--color-dark-500);
@@ -70,12 +74,11 @@
 }
 
 .indicator {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
+  fill: var(--color-light-100);
 }
 
-.icon {
-  //width: 24px;
-  //height: 24px;
-  fill: var(--color-light-100);
+.indicator.disabled {
+  fill: var(--color-dark-100);
 }
