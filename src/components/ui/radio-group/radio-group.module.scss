@@ -1,0 +1,45 @@
+@mixin flex(
+  $direction,
+  $rowGap: 0,
+  $colGap: 0,
+  $align-items: flex-start,
+  $justify-content: flex-start
+) {
+  display: flex;
+  flex-direction: $direction;
+  row-gap: $rowGap;
+  column-gap: $colGap;
+  align-items: $align-items;
+  justify-content: $justify-content;
+}
+
+.root {
+  @include flex(column, 12px);
+
+  .item {
+    @include flex(row, 0, 12px, center);
+
+    .radio {
+      all: unset;
+
+      cursor: pointer;
+
+      display: grid;
+      place-items: center;
+
+      box-sizing: border-box;
+      width: 16px;
+      height: 16px;
+
+      border: 2px solid var(--color-accent-500);
+      border-radius: 50%;
+
+      .indicator {
+        width: 8px;
+        height: 8px;
+        background-color: var(--color-accent-500);
+        border-radius: 50%;
+      }
+    }
+  }
+}
