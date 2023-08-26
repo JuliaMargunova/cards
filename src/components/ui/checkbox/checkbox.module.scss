@@ -29,9 +29,9 @@
   border: 2px solid var(--color-light-900);
   border-radius: 4px;
 
-  // &:focus {
-  //  background-color: var(--color-dark-500);
-  // }
+  &:focus-visible {
+    background-color: var(--color-dark-500);
+  }
 
   &:disabled {
     cursor: auto;
@@ -72,4 +72,10 @@
 .indicator {
   width: 24px;
   height: 24px;
+}
+
+.icon {
+  //width: 24px;
+  //height: 24px;
+  fill: var(--color-light-100);
 }
