@@ -1,4 +1,4 @@
-import { ComponentProps, forwardRef, useState, KeyboardEvent } from 'react'
+import { forwardRef, useState, ComponentPropsWithoutRef } from 'react'
 
 import classNames from 'classnames'
 
@@ -11,44 +11,33 @@ export type TextFieldProps = {
   type?: 'search' | 'text' | 'password'
   label?: string
   errorMessage?: string
-  className?: string
   clearField?: () => void
-  onEnter?: (e: KeyboardEvent<HTMLInputElement>) => void
-  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void
-} & ComponentProps<'input'>
+} & ComponentPropsWithoutRef<'input'>
 
-type PropsType = TextFieldProps & Omit<ComponentProps<'input'>, keyof TextFieldProps>
+type PropsType = TextFieldProps & Omit<ComponentPropsWithoutRef<'input'>, keyof TextFieldProps>
 
 export const TextField = forwardRef<HTMLInputElement, PropsType>(
-  (
-    { type = 'text', errorMessage, className, onEnter, onKeyDown, clearField, label, ...rest },
-    ref
-  ) => {
-    const [currentType, setCurrentType] = useState(type)
+  ({ type = 'text', errorMessage, className, clearField, label, ...rest }, ref) => {
+    const [showPassword, setShowPassword] = useState(false)
 
-    const displayClearButton = clearField && rest.value
+    const isPasswordType = type === 'password'
 
-    const error = !!errorMessage?.length
+    const isSearchType = type === 'search'
 
-    const showPasswordHandler = () => {
-      if (type === 'password') {
-        setCurrentType(prevState => (prevState === 'text' ? 'password' : 'text'))
-      }
-    }
+    const displayClearButton = isSearchType && clearField && rest.value
 
-    const keyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (onEnter && e.key === 'Enter') onEnter(e)
-      else onKeyDown?.(e)
-    }
+    const finalType = getFinalType(type, showPassword)
+
+    const passwordHandler = () => setShowPassword(prev => !prev)
 
     const labelClasses = classNames(s.label, {
       [s.disabled]: rest.disabled,
     })
 
     const inputClasses = classNames(className, s.input, {
-      [s.search]: type === 'search',
+      [s.search]: isSearchType,
       [s.filled]: rest.value,
-      [s.error]: error,
+      [s.error]: !!errorMessage,
     })
 
     const searchIconClasses = classNames(s.searchIcon, {
@@ -58,34 +47,41 @@ export const TextField = forwardRef<HTMLInputElement, PropsType>(
 
     return (
       <div className={s.root}>
-        {label && (
-          <Typography variant="body2" className={labelClasses}>
-            {label}
-          </Typography>
-        )}
-        <div className={s.container}>
-          <input
-            className={inputClasses}
-            type={type === 'password' ? currentType : 'text'}
-            ref={ref}
-            {...rest}
-            onKeyDown={keyHandler}
-          />
-          {type === 'password' && (
-            <button className={s.button} onClick={showPasswordHandler} disabled={rest.disabled}>
-              {currentType === 'text' ? <Icon name="eyeOff" /> : <Icon name="eye" />}
-            </button>
-          )}
-          {type === 'search' && (
-            <Icon name="search" width={20} height={20} className={searchIconClasses} />
-          )}
-          {type === 'search' && displayClearButton && (
-            <button className={s.button} onClick={clearField} disabled={rest.disabled}>
-              <Icon name="cross" width={16} height={16} />
-            </button>
-          )}
-        </div>
-        {error && (
+        <Typography as={'label'} variant="body2" className={labelClasses}>
+          {label}
+          <div className={s.container}>
+            <input
+              className={inputClasses}
+              type={isPasswordType ? finalType : 'text'}
+              ref={ref}
+              {...rest}
+            />
+            {isPasswordType && (
+              <button
+                type="button"
+                className={s.button}
+                onClick={passwordHandler}
+                disabled={rest.disabled}
+              >
+                {showPassword ? <Icon name="eyeOff" /> : <Icon name="eye" />}
+              </button>
+            )}
+            {isSearchType && (
+              <Icon name="search" width={20} height={20} className={searchIconClasses} />
+            )}
+            {displayClearButton && (
+              <button
+                type="button"
+                className={s.button}
+                onClick={clearField}
+                disabled={rest.disabled}
+              >
+                <Icon name="cross" width={16} height={16} />
+              </button>
+            )}
+          </div>
+        </Typography>
+        {!!errorMessage && (
           <Typography variant="caption" className={s.errorMessage}>
             {errorMessage}
           </Typography>
@@ -94,3 +90,11 @@ export const TextField = forwardRef<HTMLInputElement, PropsType>(
     )
   }
 )
+
+function getFinalType(type: TextFieldProps['type'], showPassword: boolean) {
+  if (type === 'password' && !showPassword) {
+    return 'password'
+  }
+
+  return 'text'
+}
