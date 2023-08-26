@@ -31,7 +31,6 @@ export const Text = {
         name={'email'}
         onChange={e => setState(e.currentTarget.value)}
         clearField={() => setState('')}
-        onEnter={() => alert(state)}
       />
     )
   },
@@ -76,6 +75,13 @@ export const TextWithError: Story = {
     placeholder: 'Placeholder',
     label: 'Error example text field',
     errorMessage: 'Some error occurred',
+  },
+}
+
+export const TextFieldWithoutLabel: Story = {
+  args: {
+    type: 'text',
+    placeholder: 'Text field Without Label',
   },
 }
 
