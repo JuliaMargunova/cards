@@ -16,6 +16,13 @@ type Story = StoryObj<typeof meta>
 
 export const AvatarStory: Story = {
   args: {
-    avatar: avatar,
+    userName: 'Jon Frieda',
+    image: avatar,
+  },
+}
+
+export const AvatarFallback: Story = {
+  args: {
+    userName: 'Jon Frieda',
   },
 }
