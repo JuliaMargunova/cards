@@ -25,19 +25,35 @@ const baseData: Option[] = [
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const DefaultControlledGroup: Story = {
   render: args => {
     const [value, setValue] = useState('1')
 
     return (
       <>
         <RadioGroup {...args} value={value} onValueChange={setValue} />
-        <div>Selected value: {value}</div>
+        <div style={{ marginTop: '10px' }}>Selected value: {value}</div>
       </>
     )
   },
 
   args: {
     options: baseData,
+  },
+}
+
+export const DisabledGroup: Story = {
+  args: {
+    options: baseData,
+    value: '1',
+    disabled: true,
+  },
+}
+
+export const GroupWithError: Story = {
+  args: {
+    options: baseData,
+    value: '1',
+    errorMessage: 'Some error occurred',
   },
 }
