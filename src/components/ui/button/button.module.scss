@@ -39,12 +39,12 @@
   background: var(--color-accent-500);
   box-shadow: 0 4px 18px rgb(140 97 255 / 35%);
 
-  &:active {
-    background: var(--color-accent-700);
-  }
-
   &:hover {
     background: var(--color-accent-300);
+  }
+
+  &:active {
+    background: var(--color-accent-700);
   }
 
   &:focus-visible {
@@ -65,12 +65,12 @@
   background: var(--color-dark-300);
   box-shadow: 0 2px 10px 0 rgb(109 109 109 / 25%);
 
-  &:active {
-    background: var(--color-dark-500);
-  }
-
   &:hover {
     background: var(--color-dark-100);
+  }
+
+  &:active {
+    background: var(--color-dark-500);
   }
 
   &:focus-visible {
@@ -92,13 +92,13 @@
   color: var(--color-accent-500);
   border: 1px solid var(--color-accent-500);
 
-  &:active {
-    background: var(--color-accent-900);
+  &:hover {
+    background: var(--color-dark-500);
     border: 1px solid var(--color-accent-700);
   }
 
-  &:hover {
-    background: var(--color-dark-500);
+  &:active {
+    background: var(--color-accent-900);
     border: 1px solid var(--color-accent-700);
   }
 
@@ -121,12 +121,12 @@
   color: var(--color-accent-500);
   text-decoration: none;
 
-  &:active {
-    background: var(--color-accent-700);
-  }
-
   &:hover {
     color: var(--color-accent-300);
+  }
+
+  &:active {
+    background: var(--color-accent-700);
   }
 
   &:focus-visible {
