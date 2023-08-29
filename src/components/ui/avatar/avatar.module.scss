@@ -1,4 +1,9 @@
 .avatar {
+  .image {
+    border: 1px solid transparent;
+    border-radius: 50%;
+  }
+
   .fallback {
     padding: 4px;
 

@@ -1,7 +1,6 @@
-import { FC } from 'react'
+import { CSSProperties, FC } from 'react'
 
 import * as AvatarRadix from '@radix-ui/react-avatar'
-import classNames from 'classnames'
 
 import s from './avatar.module.scss'
 
@@ -11,26 +10,29 @@ type Props = {
   style?: string
   userName: string
 }
-export const Avatar: FC<Props> = props => {
-  const { style, image, size = 36, userName } = props
-
+export const Avatar: FC<Props> = ({ style = '', image, size = 36, userName }) => {
   let initials = userName
     .split(' ')
     .map(word => word[0].toUpperCase())
     .join(' ')
 
+  const styles: CSSProperties = {
+    width: size,
+    height: size,
+  }
+
   return (
     <div className={s.avatar}>
       <AvatarRadix.Root className="AvatarRoot">
         <AvatarRadix.Image
-          className={style}
+          className={`${s.image} ${style}`}
           src={image}
           alt="User Avatar"
           width={size}
           height={size}
         />
         {!image && (
-          <AvatarRadix.Fallback className={classNames(s.fallback, size)} delayMs={600}>
+          <AvatarRadix.Fallback className={s.fallback} style={styles} delayMs={600}>
             {initials}
           </AvatarRadix.Fallback>
         )}

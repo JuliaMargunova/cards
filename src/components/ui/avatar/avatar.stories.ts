@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import avatar from './../../../assets/icons/Ellipse 54.png'
-
 import { Avatar } from '@/components/ui/avatar/avatar.tsx'
 
 const meta = {
@@ -17,7 +15,7 @@ type Story = StoryObj<typeof meta>
 export const AvatarStory: Story = {
   args: {
     userName: 'Jon Frieda',
-    image: avatar,
+    image: 'https://aquarium-fish-home.ru/wp-content/uploads/2019/08/s1200-3.jpg',
   },
 }
 
