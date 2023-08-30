@@ -5,6 +5,9 @@
   }
 
   .fallback {
+    display: grid;
+    place-items: center;
+
     padding: 4px;
 
     font-size: var(--font-size-m);
