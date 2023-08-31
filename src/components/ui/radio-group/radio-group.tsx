@@ -7,17 +7,15 @@ import s from './radio-group.module.scss'
 
 import { Typography } from '@/components/ui/typography'
 
-export type Option = {
-  label: string
-  value: string
-}
+export type Option = Record<'label' | 'value', string>
 
-type RadioGroupProps = {
+export type RadioGroupProps = {
   options: Option[]
   value?: string
   onValueChange?: (value: string) => void
   errorMessage?: string
   disabled?: boolean
+  name?: string
 }
 
 export const RadioGroup: FC<RadioGroupProps> = ({ options, errorMessage, ...rest }) => {
