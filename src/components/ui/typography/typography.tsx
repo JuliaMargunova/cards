@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType } from 'react'
 
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 
 import s from './typography.module.scss'
 
@@ -24,6 +24,7 @@ export const Typography = <T extends ElementType = 'p'>(
   props: TypographyProps<T> & ComponentPropsWithoutRef<T>
 ) => {
   const { variant = 'body1', className, as: Component = 'p', ...rest } = props
+  const classNames = clsx(s[variant], className)
 
-  return <Component className={classNames(s[variant], className)} {...rest} />
+  return <Component className={classNames} {...rest} />
 }

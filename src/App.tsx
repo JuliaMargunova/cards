@@ -1,3 +1,5 @@
-export function App() {
-  return <div>Hello</div>
+import { Router } from '@/router.tsx'
+
+export const App = () => {
+  return <Router />
 }

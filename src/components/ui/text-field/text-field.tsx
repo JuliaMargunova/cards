@@ -1,6 +1,6 @@
 import { forwardRef, useState, ComponentPropsWithoutRef } from 'react'
 
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 
 import s from './text-field.module.scss'
 
@@ -30,27 +30,29 @@ export const TextField = forwardRef<HTMLInputElement, PropsType>(
 
     const passwordHandler = () => setShowPassword(prev => !prev)
 
-    const labelClasses = classNames(s.label, {
-      [s.disabled]: rest.disabled,
-    })
-
-    const inputClasses = classNames(s.input, className, {
-      [s.search]: isSearchType,
-      [s.filled]: rest.value,
-      [s.error]: !!errorMessage,
-    })
-
-    const searchIconClasses = classNames(s.searchIcon, {
-      [s.disabledIcon]: rest.disabled,
-      [s.filledIcon]: rest.value,
-    })
+    const classes = {
+      root: clsx(s.root, className),
+      label: clsx(s.label, rest.disabled && s.disabled),
+      input: clsx(
+        s.input,
+        isSearchType && s.search,
+        rest.value && s.filled,
+        errorMessage && s.error
+      ),
+      searchIcon: clsx(s.searchIcon, rest.disabled && s.disabledIcon, rest.value && s.filledIcon),
+    }
 
     return (
-      <div className={s.root}>
-        <Typography as={'label'} variant="body2" className={labelClasses}>
+      <div className={classes.root}>
+        <Typography as={'label'} variant="body2" className={classes.label}>
           {label}
           <div className={s.container}>
-            <input className={inputClasses} type={finalType} ref={ref} {...rest} />
+            <input
+              className={classes.input}
+              type={isPasswordType ? finalType : 'text'}
+              ref={ref}
+              {...rest}
+            />
             {isPasswordType && (
               <button
                 type="button"
@@ -62,7 +64,7 @@ export const TextField = forwardRef<HTMLInputElement, PropsType>(
               </button>
             )}
             {isSearchType && (
-              <Icon name="search" width={20} height={20} className={searchIconClasses} />
+              <Icon name="search" width={20} height={20} className={classes.searchIcon} />
             )}
             {displayClearButton && (
               <button

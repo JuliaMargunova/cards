@@ -112,11 +112,13 @@ export const MappedTable: Story = {
     children: (
       <>
         <Table.Head>
-          <Table.HeadCell>№</Table.HeadCell>
-          <Table.HeadCell>Description</Table.HeadCell>
-          <Table.HeadCell>Link</Table.HeadCell>
-          <Table.HeadCell>Type</Table.HeadCell>
-          <Table.HeadCell>Date</Table.HeadCell>
+          <Table.Row>
+            <Table.HeadCell>№</Table.HeadCell>
+            <Table.HeadCell>Description</Table.HeadCell>
+            <Table.HeadCell>Link</Table.HeadCell>
+            <Table.HeadCell>Type</Table.HeadCell>
+            <Table.HeadCell>Date</Table.HeadCell>
+          </Table.Row>
         </Table.Head>
         <Table.Body>
           {data.map(el => (
