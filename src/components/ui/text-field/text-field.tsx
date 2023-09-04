@@ -34,7 +34,7 @@ export const TextField = forwardRef<HTMLInputElement, PropsType>(
       [s.disabled]: rest.disabled,
     })
 
-    const inputClasses = classNames(className, s.input, {
+    const inputClasses = classNames(s.input, className, {
       [s.search]: isSearchType,
       [s.filled]: rest.value,
       [s.error]: !!errorMessage,
@@ -50,12 +50,7 @@ export const TextField = forwardRef<HTMLInputElement, PropsType>(
         <Typography as={'label'} variant="body2" className={labelClasses}>
           {label}
           <div className={s.container}>
-            <input
-              className={inputClasses}
-              type={isPasswordType ? finalType : 'text'}
-              ref={ref}
-              {...rest}
-            />
+            <input className={inputClasses} type={finalType} ref={ref} {...rest} />
             {isPasswordType && (
               <button
                 type="button"
