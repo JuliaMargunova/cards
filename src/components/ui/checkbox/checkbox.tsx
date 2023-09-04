@@ -6,6 +6,8 @@ import classNames from 'classnames'
 
 import s from './checkbox.module.scss'
 
+import { Icon } from '@/components/ui/icon/icon.tsx'
+
 type CheckboxProps = {
   checked: boolean
   onChange: (checked: boolean) => void
@@ -29,8 +31,11 @@ export const Checkbox: FC<CheckboxProps> = props => {
             disabled={disabled}
           >
             {checked && (
-              <RadixCheckbox.Indicator className={s.indicator} forceMount>
-                <Check />
+              <RadixCheckbox.Indicator
+                className={classNames(s.indicator, { [s.disabled]: disabled })}
+                forceMount
+              >
+                <Icon name={'check'} />
               </RadixCheckbox.Indicator>
             )}
           </RadixCheckbox.Root>
@@ -38,16 +43,5 @@ export const Checkbox: FC<CheckboxProps> = props => {
         {label}
       </RadixLabel.Root>
     </div>
-  )
-}
-
-export const Check: FC = () => {
-  return (
-    <svg width={24} height={24} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M16 0H2a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V2a2 2 0 00-2-2zM7 14L2 9l1.41-1.41L7 11.17l7.59-7.59L16 5l-9 9z"
-        fill="currentColor"
-      />
-    </svg>
   )
 }
