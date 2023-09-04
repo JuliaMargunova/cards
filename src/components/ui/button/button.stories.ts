@@ -41,6 +41,9 @@ export const Tertiary: Story = {
 }
 export const Link: Story = {
   args: {
+    as: 'a',
+    href: 'https://www.google.com/',
+    target: '_blank',
     variant: 'link',
     children: 'Link-button',
     disabled: false,

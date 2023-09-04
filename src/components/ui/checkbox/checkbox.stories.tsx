@@ -17,21 +17,29 @@ type Story = StoryObj<typeof meta>
 export const Unchecked: Story = {
   args: {
     checked: false,
-    label: 'Click',
+    label: 'Click me',
   },
 }
 
 export const Checked: Story = {
   args: {
     checked: true,
-    label: 'Click',
+    label: 'Click me',
   },
 }
 
-export const Disabled: Story = {
+export const DisabledChecked: Story = {
   args: {
     checked: true,
-    label: 'Click',
+    label: 'Click me',
+    disabled: true,
+  },
+}
+
+export const DisabledUnchecked: Story = {
+  args: {
+    checked: false,
+    label: 'Click me',
     disabled: true,
   },
 }
@@ -39,11 +47,16 @@ export const Disabled: Story = {
 export const Controlled: Story = {
   args: {
     checked: false,
-    label: 'Click',
+    label: 'Click here',
   },
   render: args => {
     const [checked, setChecked] = useState(false)
 
-    return <Checkbox {...args} checked={checked} onChange={() => setChecked(!checked)} />
+    return (
+      <>
+        <Checkbox {...args} checked={checked} onChange={() => setChecked(!checked)} />
+        Current value: {checked.toString()}
+      </>
+    )
   },
 }
