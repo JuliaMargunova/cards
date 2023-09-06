@@ -53,7 +53,7 @@
 }
 
 .triggerDisabled {
-  cursor: pointer;
+  cursor: auto;
 
   display: flex;
   gap: 12px;
@@ -65,6 +65,7 @@
 
   border: 1px solid var(--color-dark-300);
   border-radius: 0.125rem;
+  outline: none;
 
   & span {
     color: var(--color-dark-300);
