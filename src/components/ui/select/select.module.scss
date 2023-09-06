@@ -7,6 +7,8 @@
 }
 
 .icon {
+  transform: rotate(180deg);
+  fill: var(--color-light-100);
   transition: 0.2s ease-in-out;
 }
 
@@ -34,7 +36,7 @@
     border-radius: 2px 2px 0 0;
 
     .icon {
-      transform: rotate(180deg);
+      transform: rotate(360deg);
     }
   }
 
