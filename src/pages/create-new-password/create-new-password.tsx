@@ -1,9 +1,6 @@
 import s from './create-new-password.module.scss'
 
-import {
-  CreateNewPasswordForm,
-  CreateNewPasswordFormType,
-} from '@/components/forms/create-new-password'
+import { CreateNewPasswordForm, CreateNewPasswordFormType } from '@/components/forms'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 
