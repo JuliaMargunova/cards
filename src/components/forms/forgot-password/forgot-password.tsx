@@ -19,7 +19,7 @@ export const ForgotPasswordForm: FC<PropsType> = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
       <DevTool control={control} />
-      <ControlledTextField placeholder="Email" control={control} name="email" label="Email" />
+      <ControlledTextField control={control} name="email" label="Email" />
       <Typography variant="body2" className={s.information}>
         Enter your email address and we will send you further instructions
       </Typography>
