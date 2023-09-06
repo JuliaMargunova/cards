@@ -71,6 +71,7 @@
   }
 
   .iconDisabled {
+    transform: rotate(180deg);
     color: var(--color-dark-300);
     fill: var(--color-dark-300, #4c4c4c);
   }
