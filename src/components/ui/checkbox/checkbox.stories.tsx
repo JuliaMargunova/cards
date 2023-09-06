@@ -28,9 +28,17 @@ export const Checked: Story = {
   },
 }
 
-export const Disabled: Story = {
+export const DisabledChecked: Story = {
   args: {
     checked: true,
+    label: 'Click me',
+    disabled: true,
+  },
+}
+
+export const DisabledUnchecked: Story = {
+  args: {
+    checked: false,
     label: 'Click me',
     disabled: true,
   },
@@ -44,6 +52,11 @@ export const Controlled: Story = {
   render: args => {
     const [checked, setChecked] = useState(false)
 
-    return <Checkbox {...args} checked={checked} onChange={() => setChecked(!checked)} />
+    return (
+      <>
+        <Checkbox {...args} checked={checked} onChange={() => setChecked(!checked)} />
+        Current value: {checked.toString()}
+      </>
+    )
   },
 }
