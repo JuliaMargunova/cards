@@ -3,10 +3,15 @@ import s from './packs.module.scss'
 import { Button } from '@/components/ui/button'
 import { Table } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
-import { useGetDecksQuery } from '@/services/decks/decks.ts'
+import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.ts'
 
 export const Packs = () => {
   const packs = useGetDecksQuery()
+  const [createDeck] = useCreateDeckMutation()
+
+  const createDeckHandler = () => {
+    createDeck({ name: 'Created Deck' })
+  }
 
   return (
     <div className={s.root}>
@@ -15,7 +20,7 @@ export const Packs = () => {
           <Typography as="h1" variant="large">
             Packs list
           </Typography>
-          <Button>Add New Pack</Button>
+          <Button onClick={createDeckHandler}>Add New Pack</Button>
         </div>
         <div className={s.filter}></div>
       </div>

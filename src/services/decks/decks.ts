@@ -9,8 +9,17 @@ const decksAPI = baseAPI.injectEndpoints({
         method: 'GET',
         params: params ?? {},
       }),
+      providesTags: ['Decks'],
+    }),
+    createDeck: builder.mutation<any, { name: string }>({
+      query: ({ name }) => ({
+        url: `v1/decks`,
+        method: 'POST',
+        body: { name },
+      }),
+      invalidatesTags: ['Decks'],
     }),
   }),
 })
 
-export const { useGetDecksQuery } = decksAPI
+export const { useGetDecksQuery, useCreateDeckMutation } = decksAPI
