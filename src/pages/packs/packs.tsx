@@ -1,12 +1,14 @@
 import s from './packs.module.scss'
 
 import { Button } from '@/components/ui/button'
+import { Icon } from '@/components/ui/icon/icon.tsx'
 import { Table } from '@/components/ui/table'
+import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.ts'
 
 export const Packs = () => {
-  const packs = useGetDecksQuery()
+  const packs = useGetDecksQuery({ itemsPerPage: 15 })
   const [createDeck] = useCreateDeckMutation()
 
   const createDeckHandler = () => {
@@ -22,7 +24,13 @@ export const Packs = () => {
           </Typography>
           <Button onClick={createDeckHandler}>Add New Pack</Button>
         </div>
-        <div className={s.filter}></div>
+        <div className={s.filter}>
+          <TextField type="search" className={s.textField} />
+          <Button variant="secondary">
+            <Icon name={'trash-bin'} className={s.icon} />
+            Filter
+          </Button>
+        </div>
       </div>
       <Table.Root>
         <Table.Head>
@@ -31,6 +39,7 @@ export const Packs = () => {
             <Table.HeadCell>Cards</Table.HeadCell>
             <Table.HeadCell>Last Updated</Table.HeadCell>
             <Table.HeadCell>Created by</Table.HeadCell>
+            <Table.HeadCell></Table.HeadCell>
           </Table.Row>
         </Table.Head>
         <Table.Body>
@@ -38,8 +47,9 @@ export const Packs = () => {
             <Table.Row key={pack.id}>
               <Table.Cell>{pack.name}</Table.Cell>
               <Table.Cell>{pack.cardsCount}</Table.Cell>
-              <Table.Cell>{pack.updated}</Table.Cell>
+              <Table.Cell>{new Date(pack.updated).toLocaleDateString()}</Table.Cell>
               <Table.Cell>{pack.author.name}</Table.Cell>
+              <Table.Cell>icon buttons</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
