@@ -1,0 +1,11 @@
+@import '@/styles/mixins';
+
+.root {
+  .header {
+    margin-bottom: 36px;
+
+    .top {
+      @include flex(row, 0, 0, center, space-between);
+    }
+  }
+}
