@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { SelectDemo } from './select.tsx'
+import { Select } from './select.tsx'
 
 const meta = {
   title: 'Components/Select',
-  component: SelectDemo,
+  component: Select,
   tags: ['autodocs'],
   argTypes: { onValueChange: { action: 'select changes' } },
-} satisfies Meta<typeof SelectDemo>
+} satisfies Meta<typeof Select>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -20,7 +20,7 @@ const quiz = [
   { value: '5', label: 'Music ' },
 ]
 
-export const Select: Story = {
+export const SelectDemo: Story = {
   args: {
     label: 'Select',
     placeholder: 'Select item',
