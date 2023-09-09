@@ -1,18 +1,39 @@
+import { ChangeEvent, useState } from 'react'
+
 import s from './packs.module.scss'
 
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon/icon.tsx'
+import { Slider } from '@/components/ui/slider'
 import { Table } from '@/components/ui/table'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.ts'
 
 export const Packs = () => {
-  const packs = useGetDecksQuery({ itemsPerPage: 15 })
+  const [sliderValue, setSliderValue] = useState([0, 10])
+  const [searchName, setSearchName] = useState('')
+
+  const packs = useGetDecksQuery({
+    name: searchName,
+    itemsPerPage: 15,
+    minCardsCount: sliderValue[0],
+    maxCardsCount: sliderValue[1],
+  })
+
   const [createDeck] = useCreateDeckMutation()
 
   const createDeckHandler = () => {
     createDeck({ name: 'Created Deck' })
+  }
+
+  const searchNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchName(e.currentTarget.value)
+  }
+
+  const clearFilterHandler = () => {
+    setSliderValue([0, 10])
+    setSearchName('')
   }
 
   return (
@@ -25,10 +46,19 @@ export const Packs = () => {
           <Button onClick={createDeckHandler}>Add New Pack</Button>
         </div>
         <div className={s.filter}>
-          <TextField type="search" className={s.textField} />
-          <Button variant="secondary">
+          <TextField
+            type="search"
+            value={searchName}
+            onChange={searchNameHandler}
+            className={s.textField}
+          />
+          <div className={s.slider}>
+            <Typography variant="body2">Number of cards</Typography>
+            <Slider value={sliderValue} onChange={setSliderValue} max={10} />
+          </div>
+          <Button variant="secondary" onClick={clearFilterHandler}>
             <Icon name={'trash-bin'} className={s.icon} />
-            Filter
+            Clear Filter
           </Button>
         </div>
       </div>
