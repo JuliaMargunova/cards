@@ -1,11 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react'
 
 import { Avatar } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { DropDown } from '@/components/ui/dropdown'
+import { DropDown, DropDownItem, DropDownItemWithIcon } from '@/components/ui/dropdown'
 import { ProfileBlock } from '@/components/ui/header/profile-block'
 import { Icon } from '@/components/ui/icon/icon.tsx'
-import { Typography } from '@/components/ui/typography'
 
 const meta = {
   title: 'Components/DropDownMenu',
@@ -20,36 +18,13 @@ type Story = StoryObj<typeof meta>
 // @ts-ignore
 export const Default: Story = {
   render: () => {
-    const items = [
-      {
-        component: (
-          <Button variant="link">
-            <Icon name={'playCircle'} />
-            <Typography>Learn</Typography>
-          </Button>
-        ),
-      },
-      {
-        component: (
-          <Button variant="link">
-            <Icon name={'edit'} />
-            <Typography>Edit</Typography>
-          </Button>
-        ),
-      },
-      {
-        component: (
-          <Button variant="link">
-            <Icon name={'delete'} />
-            <Typography>Delete</Typography>
-          </Button>
-        ),
-      },
-    ]
-
     return (
       <div style={{ marginLeft: 200 }}>
-        <DropDown trigger={<Button>Click</Button>} items={items} />
+        <DropDown>
+          <DropDownItemWithIcon icon={<Icon name="playCircle" />} text="Learn" />
+          <DropDownItemWithIcon icon={<Icon name="edit" />} text="Edit" />
+          <DropDownItemWithIcon icon={<Icon name="delete" />} text="Delete" />
+        </DropDown>
       </div>
     )
   },
@@ -64,31 +39,15 @@ export const WithProfile: Story = {
       img: '',
     }
 
-    const items = [
-      {
-        component: <ProfileBlock userData={userData} />,
-      },
-      {
-        component: (
-          <Button variant="link">
-            <Icon name={'user'} />
-            <Typography>My Profile</Typography>
-          </Button>
-        ),
-      },
-      {
-        component: (
-          <Button variant="link">
-            <Icon name={'logout'} />
-            <Typography>Sign Out</Typography>
-          </Button>
-        ),
-      },
-    ]
-
     return (
       <div style={{ marginLeft: 200 }}>
-        <DropDown trigger={<Avatar userName={'Alex'} />} items={items} />
+        <DropDown trigger={<Avatar userName={'Alex'} />}>
+          <DropDownItem>
+            <ProfileBlock userData={userData} />
+          </DropDownItem>
+          <DropDownItemWithIcon icon={<Icon name="user" />} text="My profile" />
+          <DropDownItemWithIcon icon={<Icon name="logout" />} text="Sign out" />
+        </DropDown>
       </div>
     )
   },

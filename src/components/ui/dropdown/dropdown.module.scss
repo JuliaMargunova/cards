@@ -7,6 +7,22 @@
   outline: none;
 }
 
+.btn {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+}
+
 .content {
   @include flex(column, 0, 0, flex-start);
 
@@ -28,12 +44,12 @@
   content: '';
 
   position: absolute;
-  top: -8px;
-  right: 15px;
+  top: -6px;
+  right: 13px;
   transform: rotate(45deg);
 
-  width: 14px;
-  height: 14px;
+  width: 11px;
+  height: 11px;
 
   background: var(--color-dark-700);
   border-top: 1px solid var(--color-dark-500);
@@ -47,6 +63,8 @@
   user-select: none;
 
   position: relative;
+
+  gap: 0.625rem;
 
   width: 100%;
   padding: 12px 0;
@@ -84,12 +102,21 @@
   padding: 12px 0 0;
 }
 
-.item:hover {
-  // color: var(--color-dark-100);
-  // fill: var(--color-dark-100);
+.profileBlock {
+  padding-bottom: 12px;
+  outline: none;
 }
 
-p:hover {
-  color: var(--color-dark-100);
-  transition: all 0.3s;
+.profileBlock::before {
+  content: '';
+
+  position: absolute;
+  bottom: 95px;
+
+  display: block;
+
+  width: 88%;
+  height: 1px;
+
+  border-bottom: 1px solid var(--color-dark-500);
 }
