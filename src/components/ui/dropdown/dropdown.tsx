@@ -66,7 +66,9 @@ export const DropDownItem: FC<DropDownItemProps> = ({ children, className, onSel
 
   return (
     <DropdownMenu.Item className={itemClass} onSelect={onSelect} onClick={e => e.stopPropagation()}>
-      <motion.div onClick={e => e.stopPropagation()}>{children}</motion.div>
+      <motion.div onClick={e => e.stopPropagation()} className={s.profileWrapper}>
+        {children}
+      </motion.div>
     </DropdownMenu.Item>
   )
 }

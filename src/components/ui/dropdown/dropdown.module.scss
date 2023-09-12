@@ -97,8 +97,11 @@
 }
 
 .profileBlock {
-  padding: 12px 0;
   outline: none;
+
+  .profileWrapper {
+    padding: 12px 0;
+  }
 }
 
 .profileBlock::before {
