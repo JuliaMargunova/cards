@@ -1,11 +1,13 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useState } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { clsx } from 'clsx'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import s from './dropdown.module.scss'
 
 import { Icon } from '@/components/ui/icon/icon.tsx'
+import { Typography } from '@/components/ui/typography'
 
 type DropDownProps = {
   trigger?: ReactNode
@@ -15,6 +17,7 @@ type DropDownProps = {
 } & DropdownMenu.DropdownMenuProps
 
 export const DropDown: FC<DropDownProps> = ({ trigger, children, align = 'end', className }) => {
+  const [open, setOpen] = useState(false)
   const classNames = {
     trigger: s.trigger,
     btn: s.btn,
@@ -22,7 +25,7 @@ export const DropDown: FC<DropDownProps> = ({ trigger, children, align = 'end', 
   }
 
   return (
-    <DropdownMenu.Root modal>
+    <DropdownMenu.Root modal open={open} onOpenChange={setOpen}>
       <DropdownMenu.Trigger className={classNames.trigger}>
         {trigger ?? (
           <button className={classNames.btn}>
@@ -31,11 +34,23 @@ export const DropDown: FC<DropDownProps> = ({ trigger, children, align = 'end', 
         )}
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Portal>
-        <DropdownMenu.Content align={align} className={classNames.content}>
-          {children}
-        </DropdownMenu.Content>
-      </DropdownMenu.Portal>
+      <AnimatePresence>
+        {open && (
+          <DropdownMenu.Portal forceMount>
+            <DropdownMenu.Content
+              align={align}
+              forceMount
+              className={classNames.content}
+              asChild
+              onClick={e => e.stopPropagation()}
+            >
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                {children}
+              </motion.div>
+            </DropdownMenu.Content>
+          </DropdownMenu.Portal>
+        )}
+      </AnimatePresence>
     </DropdownMenu.Root>
   )
 }
@@ -50,8 +65,8 @@ export const DropDownItem: FC<DropDownItemProps> = ({ children, className, onSel
   const itemClass = clsx(s.profileBlock, className)
 
   return (
-    <DropdownMenu.Item className={itemClass} onSelect={onSelect}>
-      {children}
+    <DropdownMenu.Item className={itemClass} onSelect={onSelect} onClick={e => e.stopPropagation()}>
+      <motion.div onClick={e => e.stopPropagation()}>{children}</motion.div>
     </DropdownMenu.Item>
   )
 }
@@ -68,7 +83,8 @@ export const DropDownItemWithIcon: FC<DropDownItemWithIconProps> = props => {
 
   return (
     <DropdownMenu.Item className={itemClass} onSelect={onSelect}>
-      {icon} {text}
+      <div className={s.icon}>{icon}</div>
+      <Typography>{text}</Typography>
     </DropdownMenu.Item>
   )
 }

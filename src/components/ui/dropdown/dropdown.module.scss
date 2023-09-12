@@ -5,22 +5,20 @@
   background: inherit;
   border: none;
   outline: none;
-}
 
-.btn {
-  cursor: pointer;
+  .btn {
+    @include flex(row, 0, 0, center, center);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    cursor: pointer;
 
-  width: 24px;
-  height: 24px;
-  padding: 0;
+    width: 24px;
+    height: 24px;
+    padding: 0;
 
-  background: transparent;
-  border: none;
-  border-radius: 50%;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+  }
 }
 
 .content {
@@ -31,7 +29,7 @@
   position: relative;
 
   margin-top: 10px;
-  padding: 12px;
+  padding: 0 12px;
 
   color: var(--color-light-100);
 
@@ -74,6 +72,10 @@
   fill: var(--color-light-100);
 
   transition: all 0.3s;
+
+  .icon {
+    @include flex(row, 0, 0, center, center);
+  }
 }
 
 .item::before {
@@ -94,16 +96,8 @@
   display: none;
 }
 
-.item:first-child {
-  padding: 0 0 12px;
-}
-
-.item:last-child {
-  padding: 12px 0 0;
-}
-
 .profileBlock {
-  padding-bottom: 12px;
+  padding: 12px 0;
   outline: none;
 }
 
