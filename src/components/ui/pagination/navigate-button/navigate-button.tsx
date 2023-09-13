@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, FC } from 'react'
 
 import { clsx } from 'clsx'
 
-import s from '@/components/ui/pagination/navigate-button/navigate-button.module.scss'
+import s from './navigate-button.module.scss'
 
 type Props = {
   active: boolean

@@ -2,11 +2,11 @@ import { FC } from 'react'
 
 import { clsx } from 'clsx'
 
+import { NavigationBlock } from './navigation-block/navigation-block.tsx'
+import { PageSizeSelect } from './page-size-select/page-size-select.tsx'
 import s from './pagination.module.scss'
+import { usePagination } from './usePagination.ts'
 
-import { NavigationBlock } from '@/components/ui/pagination/navigation-block/navigation-block.tsx'
-import { PageSizeSelect } from '@/components/ui/pagination/page-size-select/page-size-select.tsx'
-import { usePagination } from '@/components/ui/pagination/usePagination.ts'
 import { Typography } from '@/components/ui/typography'
 
 export type PaginationProps = {

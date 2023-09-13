@@ -28,4 +28,10 @@
       }
     }
   }
+
+  .pagination {
+    @include flex(row, 0, 24px, center, center);
+
+    margin-top: 64px;
+  }
 }

@@ -1,6 +1,8 @@
 @import '@/styles/mixins';
 
 .root {
+  @include flex(row, 0, 24px, center);
+
   .dots {
     display: grid;
     place-items: center;
@@ -13,8 +15,6 @@
 
   .selectBlock {
     @include flex(row, 0, 12px, center);
-
-    padding-left: 24px;
   }
 }
 
