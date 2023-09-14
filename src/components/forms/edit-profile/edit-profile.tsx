@@ -13,12 +13,13 @@ import { Button } from '@/components/ui/button'
 type Props = {
   onSubmit: (data: EditProfileFormProps) => void
   className?: string
+  initialValues?: EditProfileFormProps
 } & PropsWithChildren
 
-export const EditProfileForm = ({ onSubmit, className, children }: Props) => {
+export const EditProfileForm = ({ onSubmit, className, initialValues }: Props) => {
   const classes = clsx(s.form, className)
 
-  const { control, handleSubmit } = useEditProfile()
+  const { control, handleSubmit } = useEditProfile(initialValues)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes}>
@@ -29,7 +30,6 @@ export const EditProfileForm = ({ onSubmit, className, children }: Props) => {
         label={'NickName'}
         className={s.nickName}
       />
-      {children}
       <Button fullWidth className={s.button}>
         Save Changes
       </Button>

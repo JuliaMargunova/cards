@@ -8,6 +8,7 @@ import {
 
 import { Layout } from '@/components/layout'
 import { ForgotPassword, SignIn, SignUp } from '@/pages'
+import { EditProfile } from '@/pages/edit-profile/edit-profile.tsx'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -28,6 +29,10 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/',
     element: <div>Kind of authorized</div>,
+  },
+  {
+    path: '/edit-profile',
+    element: <EditProfile />,
   },
 ]
 
