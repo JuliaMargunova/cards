@@ -8,6 +8,7 @@ const baseQuery = fetchBaseQuery({
 })
 
 const mutex = new Mutex()
+
 export const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
   unknown,
@@ -15,6 +16,7 @@ export const baseQueryWithReauth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   await mutex.waitForUnlock()
   let result = await baseQuery(args, api, extraOptions)
+
   if (result.error && result.error.status === 401) {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire()
@@ -26,6 +28,7 @@ export const baseQueryWithReauth: BaseQueryFn<
         api,
         extraOptions
       )
+
       if (refreshResult?.meta?.response?.status === 204) {
         result = await baseQuery(args, api, extraOptions)
       }
@@ -35,5 +38,6 @@ export const baseQueryWithReauth: BaseQueryFn<
       result = await baseQuery(args, api, extraOptions)
     }
   }
+
   return result
 }
