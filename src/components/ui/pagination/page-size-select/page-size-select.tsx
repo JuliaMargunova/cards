@@ -14,9 +14,9 @@ export const PageSizeSelect: FC<Props> = ({ pageSize, onPageSizeChange }) => {
     { label: '15', value: '15' },
   ]
 
-  const onValuseChange = (value: string) => {
+  const onValueChange = (value: string) => {
     onPageSizeChange(+value)
   }
 
-  return <Select options={options} value={`${pageSize}`} onValueChange={onValuseChange} />
+  return <Select options={options} value={`${pageSize}`} onValueChange={onValueChange} small />
 }
