@@ -3,10 +3,12 @@ import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-rou
 import { privateRoutes, publicRoutes } from './routes.tsx'
 
 import { Layout } from '@/components/layout'
+import { useGetMeQuery } from '@/features/auth'
 
 const PrivateRoutes = () => {
-  const isAuthenticated = true
-
+  const { data: me, isLoading: isMeLoading } = useGetMeQuery()
+  const isAuthenticated = !!me && !('success' in me)
+  if (isMeLoading) return <div>Loading...</div>
   return isAuthenticated ? <Outlet /> : <Navigate to="/sign-in" />
 }
 
@@ -25,5 +27,7 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
+  const { isLoading: isMeLoading } = useGetMeQuery()
+  if (isMeLoading) return <div>Loading...</div>
   return <RouterProvider router={router} />
 }
