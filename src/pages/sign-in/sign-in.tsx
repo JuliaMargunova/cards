@@ -14,6 +14,7 @@ export const SignIn = () => {
 
   if (isMeLoading) return <div>Loading...</div>
   if (me && !('success' in me)) return <Navigate to={'/'} />
+
   return (
     <div className={s.root}>
       <Card>

@@ -1,5 +1,6 @@
-import { baseAPI } from '@/services/base-api.ts'
 import { LoginArgs, LoginResponse, UserResponse } from '../types.ts'
+
+import { baseAPI } from '@/services/base-api.ts'
 
 const authAPI = baseAPI.injectEndpoints({
   endpoints: builder => ({
@@ -9,9 +10,11 @@ const authAPI = baseAPI.injectEndpoints({
           url: `v1/auth/me`,
           method: 'GET',
         })
+
         if (result.error) {
           return { data: { success: false } }
         }
+
         return { data: result.data } as { data: UserResponse }
       },
       extraOptions: {
