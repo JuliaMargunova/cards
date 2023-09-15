@@ -29,6 +29,16 @@ export const SelectDemo: Story = {
   },
 }
 
+export const SelectSmall: Story = {
+  args: {
+    label: 'Select',
+    placeholder: 'Select item',
+    disabled: false,
+    options: quiz,
+    small: true,
+  },
+}
+
 export const SelectDisabled: Story = {
   args: {
     label: 'Select',

@@ -1,9 +1,10 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import s from './packs.module.scss'
 
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon/icon.tsx'
+import { Pagination } from '@/components/ui/pagination'
 import { Slider } from '@/components/ui/slider'
 import { Table } from '@/components/ui/table'
 import { TextField } from '@/components/ui/text-field'
@@ -14,12 +15,22 @@ export const Packs = () => {
   const [sliderValue, setSliderValue] = useState([0, 10])
   const [searchName, setSearchName] = useState('')
 
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(5)
+
   const packs = useGetDecksQuery({
     name: searchName,
-    itemsPerPage: 15,
+    itemsPerPage: pageSize,
     minCardsCount: sliderValue[0],
     maxCardsCount: sliderValue[1],
+    currentPage,
   })
+
+  useEffect(() => {
+    if (packs?.data?.pagination.totalPages && currentPage < packs.data.pagination.totalPages) {
+      setCurrentPage(1)
+    }
+  }, [sliderValue, searchName])
 
   const [createDeck] = useCreateDeckMutation()
 
@@ -84,6 +95,14 @@ export const Packs = () => {
           ))}
         </Table.Body>
       </Table.Root>
+      <Pagination
+        totalCount={packs?.data?.pagination.totalItems}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        pageSize={pageSize}
+        onPageSizeChange={setPageSize}
+        className={s.pagination}
+      />
     </div>
   )
 }
