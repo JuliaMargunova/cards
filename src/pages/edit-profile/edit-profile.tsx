@@ -50,10 +50,12 @@ export const EditProfile = () => {
               image={profile.image}
             />
             {!isEditMode && (
-              <Button<'label'> as="label" variant="secondary" className={s.editImage}>
-                <Icon height={16} width={16} className={s.icon} name={'edit'} />
+              <label>
+                <Button variant="secondary" className={s.editImage}>
+                  <Icon height={16} width={16} className={s.icon} name={'edit'} />
+                </Button>
                 <input type={'file'} style={{ display: 'none' }} onChange={photoSelected} />
-              </Button>
+              </label>
             )}
           </div>
           {isEditMode ? (
@@ -64,18 +66,14 @@ export const EditProfile = () => {
             />
           ) : (
             <>
-              <Button variant={'secondary'} className={s.editNickname}>
+              <div className={s.nickName}>
                 <Typography as="h1" variant="large">
                   {profile.userName}
                 </Typography>
-                <Icon
-                  height={16}
-                  width={16}
-                  className={s.icon}
-                  onClick={toggleEditMode}
-                  name={'edit'}
-                />
-              </Button>
+                <button className={s.editNickname} onClick={toggleEditMode}>
+                  <Icon height={16} width={16} className={s.icon} name={'edit'} />
+                </button>
+              </div>
               <Typography as="h2" variant="body2" className={s.email}>
                 {profile.email}
               </Typography>

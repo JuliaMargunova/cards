@@ -42,10 +42,26 @@
     }
 
     .editNickname {
+      all: unset;
+
+      display: grid;
+      place-items: center;
+
+      width: 24px;
+      height: 24px;
       margin: 0;
       padding: 0;
-      background: none;
-      box-shadow: none;
+
+      background-color: transparent;
+      border-radius: 4px;
+
+      &:hover {
+        background-color: var(--color-dark-300);
+      }
+    }
+
+    .nickName {
+      @include flex(row, 0, 12px, center);
     }
 
     .iconLogout {

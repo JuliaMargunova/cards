@@ -1,6 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import { CreateNewPassword, ForgotPassword, Packs, SignIn, SignUp } from '@/pages'
+import { EditProfile } from '@/pages/edit-profile/edit-profile.tsx'
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -29,5 +30,9 @@ export const privateRoutes: RouteObject[] = [
   {
     path: '/packs',
     element: <Packs />,
+  },
+  {
+    path: '/edit-profile',
+    element: <EditProfile />,
   },
 ]
