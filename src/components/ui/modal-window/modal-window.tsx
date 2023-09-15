@@ -20,9 +20,9 @@ export const ModalWindow: FC<Props> = ({ open, setOpen, title, children }) => {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Portal>
-        <Dialog.Overlay className={s.overlay} />
+        <Dialog.Overlay className={s.overlay} forceMount />
         <div className={s.root}>
-          <Dialog.Content>
+          <Dialog.Content className={s.window} forceMount>
             <Card className={s.card}>
               <div className={s.header}>
                 <Typography variant="h2" as="h2" className="DialogTitle">
