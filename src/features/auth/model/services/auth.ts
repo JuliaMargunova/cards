@@ -30,7 +30,7 @@ const authAPI = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['Me'],
     }),
-    logout: builder.mutation({
+    logout: builder.mutation<void, void>({
       query: () => ({
         url: `v1/auth/logout`,
         method: 'POST',
