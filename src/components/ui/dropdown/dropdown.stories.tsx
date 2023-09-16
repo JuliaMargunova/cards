@@ -1,8 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react'
 
+import { ProfileInfo } from '../header/profile-info'
+
 import { Avatar } from '@/components/ui/avatar'
 import { DropDown, DropDownItem, DropDownItemWithIcon } from '@/components/ui/dropdown'
-import { ProfileBlock } from '@/components/ui/header/profile-block'
 import { Icon } from '@/components/ui/icon/icon.tsx'
 
 const meta = {
@@ -36,14 +37,14 @@ export const WithProfile: Story = {
     const userData = {
       name: 'Alex',
       email: 'alexandr.1996@list.ru',
-      img: '',
+      avatar: '',
     }
 
     return (
       <div style={{ marginLeft: 200 }}>
         <DropDown trigger={<Avatar userName={'Alex'} />}>
           <DropDownItem>
-            <ProfileBlock userData={userData} />
+            <ProfileInfo {...userData} />
           </DropDownItem>
           <DropDownItemWithIcon icon={<Icon name="user" />} text="My profile" />
           <DropDownItemWithIcon icon={<Icon name="logout" />} text="Sign out" />
