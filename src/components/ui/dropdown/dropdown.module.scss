@@ -27,6 +27,7 @@
   will-change: transform, opacity;
 
   position: relative;
+  z-index: 101;
 
   margin-top: 10px;
   padding: 0 12px;
@@ -71,7 +72,25 @@
 
   fill: var(--color-light-100);
 
-  transition: all 0.3s;
+  &:focus {
+    p {
+      color: var(--color-info-300);
+    }
+
+    svg {
+      fill: var(--color-info-300);
+    }
+  }
+
+  &:hover {
+    p {
+      color: var(--color-accent-100);
+    }
+
+    svg {
+      fill: var(--color-accent-100);
+    }
+  }
 
   .icon {
     @include flex(row, 0, 0, center, center);
