@@ -26,14 +26,13 @@ export const DropDown: FC<DropDownProps> = ({ trigger, children, align = 'end', 
 
   return (
     <DropdownMenu.Root modal open={open} onOpenChange={setOpen}>
-      <DropdownMenu.Trigger className={classNames.trigger}>
+      <DropdownMenu.Trigger className={classNames.trigger} asChild>
         {trigger ?? (
           <button className={classNames.btn}>
             <Icon name="more" />
           </button>
         )}
       </DropdownMenu.Trigger>
-
       <AnimatePresence>
         {open && (
           <DropdownMenu.Portal forceMount>
