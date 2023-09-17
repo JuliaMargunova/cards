@@ -1,14 +1,13 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import s from './packs.module.scss'
 
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon/icon.tsx'
+import { ModalWindow } from '@/components/ui/modal-window'
 import { Pagination } from '@/components/ui/pagination'
-import { Slider } from '@/components/ui/slider'
-import { Table } from '@/components/ui/table'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
+import { FilterControls, PacksTable } from '@/features/packs/ui'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.ts'
 
 export const Packs = () => {
@@ -18,7 +17,13 @@ export const Packs = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(5)
 
+  const [tabValue, setTabValue] = useState('')
+
+  const [newPackTitle, setNewPackTitle] = useState('')
+  const [open, setOpen] = useState(false)
+
   const packs = useGetDecksQuery({
+    authorId: tabValue,
     name: searchName,
     itemsPerPage: pageSize,
     minCardsCount: sliderValue[0],
@@ -27,74 +32,47 @@ export const Packs = () => {
   })
 
   useEffect(() => {
-    if (packs?.data?.pagination.totalPages && currentPage < packs.data.pagination.totalPages) {
-      setCurrentPage(1)
-    }
+    setCurrentPage(1)
   }, [sliderValue, searchName])
 
   const [createDeck] = useCreateDeckMutation()
 
   const createDeckHandler = () => {
-    createDeck({ name: 'Created Deck' })
-  }
-
-  const searchNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchName(e.currentTarget.value)
-  }
-
-  const clearFilterHandler = () => {
-    setSliderValue([0, 10])
-    setSearchName('')
+    createDeck({ name: newPackTitle })
+    setNewPackTitle('')
+    setOpen(false)
   }
 
   return (
     <div className={s.root}>
+      <ModalWindow open={open} setOpen={setOpen} title="Create new pack">
+        <TextField
+          value={newPackTitle}
+          onChange={e => setNewPackTitle(e.currentTarget.value)}
+          label="Enter title"
+        />
+        <Button onClick={createDeckHandler} style={{ marginTop: '36px' }}>
+          Create
+        </Button>
+      </ModalWindow>
       <div className={s.header}>
         <div className={s.top}>
           <Typography as="h1" variant="large">
             Packs list
           </Typography>
-          <Button onClick={createDeckHandler}>Add New Pack</Button>
+          <Button onClick={() => setOpen(true)}>Add New Pack</Button>
         </div>
-        <div className={s.filter}>
-          <TextField
-            type="search"
-            value={searchName}
-            onChange={searchNameHandler}
-            className={s.textField}
-          />
-          <div className={s.slider}>
-            <Typography variant="body2">Number of cards</Typography>
-            <Slider value={sliderValue} onChange={setSliderValue} max={10} />
-          </div>
-          <Button variant="secondary" onClick={clearFilterHandler}>
-            <Icon name={'trash-bin'} className={s.icon} />
-            Clear Filter
-          </Button>
-        </div>
+        <FilterControls
+          searchName={searchName}
+          setSearchName={setSearchName}
+          sliderValue={sliderValue}
+          sliderMaxValue={packs?.data?.maxCardsCount}
+          setSliderValue={setSliderValue}
+          tabValue={tabValue}
+          setTabValue={setTabValue}
+        />
       </div>
-      <Table.Root>
-        <Table.Head>
-          <Table.Row>
-            <Table.HeadCell>Name</Table.HeadCell>
-            <Table.HeadCell>Cards</Table.HeadCell>
-            <Table.HeadCell>Last Updated</Table.HeadCell>
-            <Table.HeadCell>Created by</Table.HeadCell>
-            <Table.HeadCell></Table.HeadCell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
-          {packs?.data?.items.map(pack => (
-            <Table.Row key={pack.id}>
-              <Table.Cell>{pack.name}</Table.Cell>
-              <Table.Cell>{pack.cardsCount}</Table.Cell>
-              <Table.Cell>{new Date(pack.updated).toLocaleDateString()}</Table.Cell>
-              <Table.Cell>{pack.author.name}</Table.Cell>
-              <Table.Cell>icon buttons</Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+      {packs?.data?.items && <PacksTable items={packs.data.items} />}
       <Pagination
         totalCount={packs?.data?.pagination.totalItems}
         currentPage={currentPage}

@@ -22,7 +22,7 @@ export const Default: Story = {
     return (
       <div style={{ marginLeft: 200 }}>
         <DropDown>
-          <DropDownItemWithIcon icon={<Icon name="playCircle" />} text="Learn" />
+          <DropDownItemWithIcon icon={<Icon name="play" />} text="Learn" />
           <DropDownItemWithIcon icon={<Icon name="edit" />} text="Edit" />
           <DropDownItemWithIcon icon={<Icon name="delete" />} text="Delete" />
         </DropDown>
@@ -42,7 +42,13 @@ export const WithProfile: Story = {
 
     return (
       <div style={{ marginLeft: 200 }}>
-        <DropDown trigger={<Avatar userName={'Alex'} />}>
+        <DropDown
+          trigger={
+            <button style={{ all: 'unset', cursor: 'pointer' }}>
+              <Avatar userName={'Alex'} />
+            </button>
+          }
+        >
           <DropDownItem>
             <ProfileInfo {...userData} />
           </DropDownItem>
