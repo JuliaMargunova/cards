@@ -1,11 +1,12 @@
 import { FC } from 'react'
 
+import { Deck } from '../../model/services'
+
 import s from './pack-row.module.scss'
 
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { IconButton } from '@/components/ui/icon-button'
 import { Table } from '@/components/ui/table'
-import { Deck } from '@/features/packs/model/servises'
 
 type Props = {
   pack: Deck

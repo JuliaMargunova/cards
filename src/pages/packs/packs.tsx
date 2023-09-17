@@ -7,16 +7,15 @@ import { ModalWindow } from '@/components/ui/modal-window'
 import { Pagination } from '@/components/ui/pagination'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/features/packs/model/servises'
+import { usePagination } from '@/features/packs/model/hooks'
+import { useCreateDeckMutation, useGetDecksQuery } from '@/features/packs/model/services'
 import { FilterControls, PacksTable } from '@/features/packs/ui'
 
 export const Packs = () => {
+  const { currentPage, pageSize, setCurrentPage, setPageSize } = usePagination()
+
   const [sliderValue, setSliderValue] = useState([0, 10])
   const [searchName, setSearchName] = useState('')
-
-  const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize, setPageSize] = useState(5)
-
   const [tabValue, setTabValue] = useState('')
 
   const [newPackTitle, setNewPackTitle] = useState('')
@@ -25,10 +24,10 @@ export const Packs = () => {
   const packs = useGetDecksQuery({
     authorId: tabValue,
     name: searchName,
+    currentPage,
     itemsPerPage: pageSize,
     minCardsCount: sliderValue[0],
     maxCardsCount: sliderValue[1],
-    currentPage,
   })
 
   useEffect(() => {

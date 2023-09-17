@@ -1,9 +1,10 @@
 import { FC } from 'react'
 
+import { Deck } from '../../model/services'
+
 import { Table } from '@/components/ui/table'
 import { useGetMeQuery } from '@/features/auth'
 import { UserResponse } from '@/features/auth/model/types.ts'
-import { Deck } from '@/features/packs/model/servises'
 import { PackRow } from '@/features/packs/ui/pack-row/pack-row.tsx'
 
 type Props = {
