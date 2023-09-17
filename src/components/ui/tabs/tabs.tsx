@@ -11,8 +11,8 @@ export type TabType = {
 }
 
 type PropsType = {
-  tabs: Array<TabType>
-  value?: string
+  tabs: TabType[]
+  value: string
   onValueChange: (value: string) => void
 }
 

@@ -7,8 +7,8 @@ import { ModalWindow } from '@/components/ui/modal-window'
 import { Pagination } from '@/components/ui/pagination'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
+import { useCreateDeckMutation, useGetDecksQuery } from '@/features/packs/model/servises'
 import { FilterControls, PacksTable } from '@/features/packs/ui'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.ts'
 
 export const Packs = () => {
   const [sliderValue, setSliderValue] = useState([0, 10])
@@ -33,7 +33,7 @@ export const Packs = () => {
 
   useEffect(() => {
     setCurrentPage(1)
-  }, [sliderValue, searchName])
+  }, [sliderValue, searchName, tabValue, pageSize])
 
   const [createDeck] = useCreateDeckMutation()
 

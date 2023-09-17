@@ -3,8 +3,8 @@ import { FC } from 'react'
 import { Table } from '@/components/ui/table'
 import { useGetMeQuery } from '@/features/auth'
 import { UserResponse } from '@/features/auth/model/types.ts'
+import { Deck } from '@/features/packs/model/servises'
 import { PackRow } from '@/features/packs/ui/pack-row/pack-row.tsx'
-import { Deck } from '@/services/decks/types.ts'
 
 type Props = {
   items: Deck[]
