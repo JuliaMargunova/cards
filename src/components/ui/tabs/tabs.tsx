@@ -11,14 +11,14 @@ export type TabType = {
 }
 
 type PropsType = {
-  tabs: Array<TabType>
-  defaultValue?: string
+  tabs: TabType[]
+  value: string
   onValueChange: (value: string) => void
 }
 
-export const Tabs: FC<PropsType> = ({ defaultValue, tabs, onValueChange }) => {
+export const Tabs: FC<PropsType> = ({ value, tabs, onValueChange }) => {
   return (
-    <TabsSwitcher.Root defaultValue={defaultValue} onValueChange={onValueChange}>
+    <TabsSwitcher.Root value={value} onValueChange={onValueChange}>
       <TabsSwitcher.List>
         {tabs.map(t => (
           <TabsSwitcher.Trigger

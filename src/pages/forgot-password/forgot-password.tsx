@@ -23,7 +23,7 @@ export const ForgotPassword = () => {
           <Typography variant="body2" className={s.notification}>
             Did you remember your password?
           </Typography>
-          <Button as={Link} to={'/'} variant="link" className={s.loggingIn}>
+          <Button as={Link} to={'/sign-in'} variant="link" className={s.loggingIn}>
             Try logging in
           </Button>
         </div>
