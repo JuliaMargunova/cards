@@ -2,9 +2,8 @@ import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { currentPageSelector, pageSizeSelector } from '@/features/packs/model/selectors'
 import { packsActions } from '@/features/packs/model/slice/packs.sliece.ts'
 
-export const usePagination = () => {
+export const usePacksPagination = () => {
   const currentPage = useAppSelector(currentPageSelector)
-
   const pageSize = useAppSelector(pageSizeSelector)
 
   const dispatch = useAppDispatch()

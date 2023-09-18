@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 
 import { Deck } from '../../model/services'
 
@@ -13,7 +13,7 @@ type Props = {
   authUserId: string
 }
 
-export const PackRow: FC<Props> = ({ pack, authUserId }) => {
+export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
   const isMyPack = authUserId === pack.author.id
 
   return (
@@ -35,4 +35,4 @@ export const PackRow: FC<Props> = ({ pack, authUserId }) => {
       </Table.Cell>
     </Table.Row>
   )
-}
+})

@@ -7,16 +7,14 @@ import { ModalWindow } from '@/components/ui/modal-window'
 import { Pagination } from '@/components/ui/pagination'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
-import { usePagination } from '@/features/packs/model/hooks'
+import { usePacksFilter, usePacksPagination } from '@/features/packs/model/hooks'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/features/packs/model/services'
 import { FilterControls, PacksTable } from '@/features/packs/ui'
 
 export const Packs = () => {
-  const { currentPage, pageSize, setCurrentPage, setPageSize } = usePagination()
-
-  const [sliderValue, setSliderValue] = useState([0, 10])
-  const [searchName, setSearchName] = useState('')
-  const [tabValue, setTabValue] = useState('')
+  const { currentPage, pageSize, setCurrentPage, setPageSize } = usePacksPagination()
+  const { searchName, tabValue, sliderValue, setSearchName, setTabValue, setSliderValue } =
+    usePacksFilter()
 
   const [newPackTitle, setNewPackTitle] = useState('')
   const [open, setOpen] = useState(false)

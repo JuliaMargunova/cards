@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 
 import { Deck } from '../../model/services'
 
@@ -11,7 +11,7 @@ type Props = {
   items: Deck[]
 }
 
-export const PacksTable: FC<Props> = ({ items }) => {
+export const PacksTable: FC<Props> = memo(({ items }) => {
   const { data } = useGetMeQuery()
 
   const authUserId = (data as UserResponse).id
@@ -38,4 +38,4 @@ export const PacksTable: FC<Props> = ({ items }) => {
       </Table.Body>
     </Table.Root>
   )
-}
+})
