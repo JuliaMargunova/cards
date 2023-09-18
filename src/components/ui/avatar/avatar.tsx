@@ -14,7 +14,7 @@ type Props = {
 }
 
 export const Avatar: FC<Props> = ({ userName, image, size = 36, style, className }) => {
-  const classes = clsx(s.avatar, className)
+  const classes = clsx(s.root, className)
 
   const initials = userName
     .split(' ')
@@ -28,15 +28,9 @@ export const Avatar: FC<Props> = ({ userName, image, size = 36, style, className
   }
 
   return (
-    <div className={classes}>
-      <AvatarRadix.Root className={s.avatarRoot}>
-        <AvatarRadix.Image className={s.image} src={image} alt="User Avatar" style={styles} />
-        {!image && (
-          <AvatarRadix.Fallback className={s.fallback} style={styles}>
-            {initials}
-          </AvatarRadix.Fallback>
-        )}
-      </AvatarRadix.Root>
-    </div>
+    <AvatarRadix.Root className={classes} style={styles}>
+      <AvatarRadix.Image className={s.image} src={image} alt={`${userName} Avatar`} />
+      <AvatarRadix.Fallback className={s.fallback}>{initials}</AvatarRadix.Fallback>
+    </AvatarRadix.Root>
   )
 }

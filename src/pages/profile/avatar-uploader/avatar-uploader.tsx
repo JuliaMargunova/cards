@@ -10,12 +10,12 @@ type PropsType = {
   avatar?: string
   name: string
   updateAvatar: (formData: FormData) => void
-  editable: boolean
+  editable?: boolean
   size?: number
 }
 
 export const AvatarUploader: FC<PropsType> = memo(props => {
-  const { avatar, name, updateAvatar, editable, size = 96 } = props
+  const { avatar, name, updateAvatar, editable = true, size = 96 } = props
   const [image, setImage] = useState(avatar)
   const inputRef = useRef<HTMLInputElement>(null)
   const photoSelected = (event: ChangeEvent<HTMLInputElement>) => {
