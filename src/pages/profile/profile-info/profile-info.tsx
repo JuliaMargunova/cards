@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, memo, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 
@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { Typography } from '@/components/ui/typography'
-import { useUpdateProfileMutation } from '@/features/profile/model/services/profile.ts'
+import { useLogoutMutation, useUpdateProfileMutation } from '@/features/auth'
 import { AvatarUploader } from '@/pages/profile/avatar-uploader/avatar-uploader.tsx'
 
 export type DataType = {
@@ -20,13 +20,13 @@ export type DataType = {
 
 type PropsType = {
   data: DataType
-  update: (value: EditProfileFormProps) => void
-  isEmailVer?: boolean
+  update: (data: EditProfileFormProps) => void
 }
 
-export const ProfileInfo: FC<PropsType> = props => {
+export const ProfileInfo: FC<PropsType> = memo(props => {
   const { data, update } = props
   const [updateProfile] = useUpdateProfileMutation()
+  const [logout] = useLogoutMutation()
   const [isEditMode, setEditMode] = useState(false)
 
   const onSubmit = (data: EditProfileFormProps) => {
@@ -37,6 +37,10 @@ export const ProfileInfo: FC<PropsType> = props => {
     setEditMode(prevIsEditMode => !prevIsEditMode)
   }
 
+  const onLogout = () => {
+    logout()
+  }
+
   return (
     <div className={s.root}>
       <Card>
@@ -44,7 +48,12 @@ export const ProfileInfo: FC<PropsType> = props => {
           <Typography as="h2" variant="large">
             Personal Information
           </Typography>
-          <AvatarUploader data={data} updateAvatar={updateProfile} isEditMode={isEditMode} />
+          <AvatarUploader
+            name={data.name}
+            avatar={data.avatar}
+            updateAvatar={updateProfile}
+            editable={!isEditMode}
+          />
           {isEditMode ? (
             <EditProfileForm
               onSubmit={onSubmit}
@@ -64,7 +73,13 @@ export const ProfileInfo: FC<PropsType> = props => {
               <Typography as="h2" variant="body2" className={s.email}>
                 {data.email}
               </Typography>
-              <Button as={Link} to="/sign-in" variant="secondary" className={s.logout}>
+              <Button
+                as={Link}
+                to="/sign-in"
+                onClick={onLogout}
+                variant="secondary"
+                className={s.logout}
+              >
                 <Icon className={s.icon} name={'logout'} height={16} width={16} />
                 <Typography variant={'subtitle2'}>Logout</Typography>
               </Button>
@@ -74,4 +89,4 @@ export const ProfileInfo: FC<PropsType> = props => {
       </Card>
     </div>
   )
-}
+})

@@ -32,10 +32,6 @@ export const privateRoutes: RouteObject[] = [
     element: <Packs />,
   },
   {
-    path: '/edit-profile',
-    element: <Profile />,
-  },
-  {
     path: '/profile',
     element: <Profile />,
   },

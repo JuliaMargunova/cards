@@ -17,3 +17,5 @@ export type ProfileResponse = {
   created: string
   updated: string
 }
+
+export type UpdateProfileFormData = FormData

@@ -1,23 +1,11 @@
 import { EditProfileFormProps } from '@/components/forms'
-import { useGetMeQuery } from '@/features/auth'
-import { useUpdateProfileMutation } from '@/features/profile/model/services/profile.ts'
-import { ProfileInfo } from '@/pages/profile/profile-info/profile-info.tsx'
+import { useGetMeQuery, useUpdateProfileMutation } from '@/features/auth'
+import { DataType, ProfileInfo } from '@/pages/profile/profile-info/profile-info.tsx'
 
 export const Profile = () => {
   const { data } = useGetMeQuery()
   const [updateProfile] = useUpdateProfileMutation()
-  const user =
-    data && !('success' in data)
-      ? {
-          name: data.name,
-          email: data.email,
-          avatar: data.avatar,
-        }
-      : {
-          name: '',
-          email: '',
-          avatar: '',
-        }
+  const user = data as DataType
   const onUpdate = (data: EditProfileFormProps) => {
     const form = new FormData()
 

@@ -1,21 +1,22 @@
-import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, FC, memo, useEffect, useRef, useState } from 'react'
 
 import s from './avatar-uploader.module.scss'
 
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon/icon.tsx'
-import { DataType } from '@/pages/profile/profile-info/profile-info.tsx'
 
 type PropsType = {
-  data: DataType
+  avatar?: string
+  name: string
   updateAvatar: (formData: FormData) => void
-  isEditMode: boolean
+  editable: boolean
+  size?: number
 }
 
-export const AvatarUploader: FC<PropsType> = props => {
-  const { data, updateAvatar, isEditMode } = props
-  const [avatar, setAvatar] = useState(data.avatar)
+export const AvatarUploader: FC<PropsType> = memo(props => {
+  const { avatar, name, updateAvatar, editable, size = 96 } = props
+  const [image, setImage] = useState(avatar)
   const inputRef = useRef<HTMLInputElement>(null)
   const photoSelected = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length) {
@@ -27,13 +28,13 @@ export const AvatarUploader: FC<PropsType> = props => {
   }
 
   useEffect(() => {
-    setAvatar(data.avatar)
-  }, [data.avatar])
+    setImage(avatar)
+  }, [avatar])
 
   return (
     <div className={s.avatarContainer}>
-      <Avatar size={96} className={s.avatar} userName={data.name || data.email} image={avatar} />
-      {!isEditMode && (
+      <Avatar size={size} className={s.avatar} userName={name} image={image} />
+      {editable && (
         <>
           <Button
             onClick={() => inputRef?.current?.click()}
@@ -53,4 +54,4 @@ export const AvatarUploader: FC<PropsType> = props => {
       )}
     </div>
   )
-}
+})
