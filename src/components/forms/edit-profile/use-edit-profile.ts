@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const editProfileSchema = z.object({
-  nickName: z.string().min(3).trim(),
+  name: z.string().min(3).trim(),
 })
 
 export type EditProfileFormProps = z.infer<typeof editProfileSchema>
 
-export const useEditProfile = (initialValues: EditProfileFormProps = { nickName: '' }) => {
+export const useEditProfile = (initialValues: EditProfileFormProps = { name: '' }) => {
   const { control, handleSubmit } = useForm<EditProfileFormProps>({
     resolver: zodResolver(editProfileSchema),
     defaultValues: initialValues,

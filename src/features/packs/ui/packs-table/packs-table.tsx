@@ -4,7 +4,7 @@ import { Deck } from '../../model/services'
 
 import { Table } from '@/components/ui/table'
 import { useGetMeQuery } from '@/features/auth'
-import { UserResponse } from '@/features/auth/model/types.ts'
+import { ProfileResponse } from '@/features/auth/model/types.ts'
 import { PackRow } from '@/features/packs/ui/pack-row/pack-row.tsx'
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 export const PacksTable: FC<Props> = memo(({ items }) => {
   const { data } = useGetMeQuery()
 
-  const authUserId = (data as UserResponse).id
+  const authUserId = (data as ProfileResponse).id
 
   if (!items.length) {
     return <Table.Empty>No content with these terms...</Table.Empty>

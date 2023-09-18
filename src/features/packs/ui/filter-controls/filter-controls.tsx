@@ -9,7 +9,7 @@ import { TabType, Tabs } from '@/components/ui/tabs'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { useGetMeQuery } from '@/features/auth'
-import { UserResponse } from '@/features/auth/model/types.ts'
+import { ProfileResponse } from '@/features/auth/model/types.ts'
 
 type Props = {
   searchName: string
@@ -32,7 +32,7 @@ export const FilterControls: FC<Props> = memo(
   }) => {
     const { data } = useGetMeQuery()
 
-    const userId = (data as UserResponse).id
+    const userId = (data as ProfileResponse).id
 
     const tabs: TabType[] = [
       { value: userId, text: 'My cards' },

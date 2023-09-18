@@ -8,7 +8,7 @@ export type LoginResponse = {
   accessToken: string
 }
 
-export type UserResponse = {
+export type ProfileResponse = {
   avatar: string
   id: string
   email: string

@@ -1,7 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import { CreateNewPassword, ForgotPassword, Packs, SignIn, SignUp } from '@/pages'
-import { EditProfile } from '@/pages/edit-profile/edit-profile.tsx'
+import { Profile } from '@/pages/profile/profile.tsx'
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -33,6 +33,10 @@ export const privateRoutes: RouteObject[] = [
   },
   {
     path: '/edit-profile',
-    element: <EditProfile />,
+    element: <Profile />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
   },
 ]

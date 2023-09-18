@@ -26,8 +26,8 @@ export const EditProfileForm = ({ onSubmit, className, initialValues }: Props) =
       <DevTool control={control} />
       <ControlledTextField
         control={control}
-        name={'nickName'}
-        label={'NickName'}
+        name={'name'}
+        label={'Nickname'}
         className={s.nickName}
       />
       <Button fullWidth className={s.button}>
