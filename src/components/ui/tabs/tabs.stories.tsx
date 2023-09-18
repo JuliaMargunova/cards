@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta } from '@storybook/react'
 
 import { Tabs } from '@/components/ui/tabs/tabs.tsx'
 
@@ -12,30 +12,22 @@ const meta = {
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+const tabs = [
+  { value: 'myCards', text: 'My cards' },
+  { value: 'allCards', text: 'All cards' },
+  { value: 'other', text: 'Other' },
+  { value: 'disabled', text: 'Disabled', disabled: true },
+]
 
-export const Default: Story = {
-  render: args => {
-    const [value, setValue] = useState(args.defaultValue)
+export const Default = {
+  render: () => {
+    const [value, setValue] = useState('myCards')
 
     return (
       <div>
-        <Tabs
-          defaultValue={args.defaultValue}
-          tabs={args.tabs}
-          onValueChange={value => setValue(value)}
-        />
+        <Tabs value={value} tabs={tabs} onValueChange={value => setValue(value)} />
         {value}
       </div>
     )
-  },
-  args: {
-    defaultValue: 'myCards',
-    tabs: [
-      { value: 'myCards', text: 'My cards' },
-      { value: 'allCards', text: 'All cards' },
-      { value: 'other', text: 'Other' },
-      { value: 'disabled', text: 'Disabled', disabled: true },
-    ],
   },
 }
