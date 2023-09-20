@@ -1,6 +1,6 @@
 import { FC, memo } from 'react'
 
-import { Deck } from '../../model/services'
+import { Deck, useDeleteDeckMutation } from '../../model/services'
 
 import s from './pack-row.module.scss'
 
@@ -16,6 +16,12 @@ type Props = {
 export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
   const isMyPack = authUserId === pack.author.id
 
+  const [deleteDeck] = useDeleteDeckMutation()
+
+  const deletePack = () => {
+    deleteDeck({ id: pack.id })
+  }
+
   return (
     <Table.Row key={pack.id}>
       <Table.Cell>{pack.name}</Table.Cell>
@@ -27,7 +33,11 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
           <div className={s.buttons}>
             <IconButton icon={<Icon name={'edit'} width={16} height={16} />} small />
             <IconButton icon={<Icon name={'play'} width={16} height={16} />} small />
-            <IconButton icon={<Icon name={'trash-bin'} width={16} height={16} />} small />
+            <IconButton
+              icon={<Icon name={'trash-bin'} width={16} height={16} />}
+              onClick={deletePack}
+              small
+            />
           </div>
         ) : (
           <IconButton icon={<Icon name={'play'} width={16} height={16} />} small />
