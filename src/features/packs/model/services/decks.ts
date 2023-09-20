@@ -1,4 +1,4 @@
-import { DecksParams, DecksResponse } from './'
+import { Deck, DecksParams, DecksResponse } from './'
 
 import { baseAPI } from '@/services/base-api.ts'
 
@@ -12,7 +12,7 @@ const decksAPI = baseAPI.injectEndpoints({
       }),
       providesTags: ['Decks'],
     }),
-    createDeck: builder.mutation<any, { name: string }>({
+    createDeck: builder.mutation<Deck, { name: string }>({
       query: ({ name }) => ({
         url: `v1/decks`,
         method: 'POST',
@@ -20,7 +20,15 @@ const decksAPI = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['Decks'],
     }),
+    deleteDeck: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `v1/decks/${id}`,
+        method: 'DELETE',
+        body: { id },
+      }),
+      invalidatesTags: ['Decks'],
+    }),
   }),
 })
 
-export const { useGetDecksQuery, useCreateDeckMutation } = decksAPI
+export const { useGetDecksQuery, useCreateDeckMutation, useDeleteDeckMutation } = decksAPI
