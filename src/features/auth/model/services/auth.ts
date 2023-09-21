@@ -37,6 +37,13 @@ const authAPI = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['Me'],
     }),
+    recoveryEmail: builder.mutation<any, any>({
+      query: () => ({
+        url: `v1/auth/recover-password`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Me'],
+    }),
   }),
 })
 
