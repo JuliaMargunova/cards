@@ -10,7 +10,7 @@ import { Card } from '@/components/ui/card'
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { Typography } from '@/components/ui/typography'
 import { useLogoutMutation, useUpdateProfileMutation } from '@/features/auth'
-import { AvatarUploader } from '@/pages/profile/avatar-uploader/avatar-uploader.tsx'
+import { AvatarUploader } from '@/features/profile/ui'
 
 export type DataType = {
   avatar: string

@@ -1,6 +1,7 @@
 import { EditProfileFormProps } from '@/components/forms'
 import { useGetMeQuery, useUpdateProfileMutation } from '@/features/auth'
-import { DataType, ProfileInfo } from '@/pages/profile/profile-info/profile-info.tsx'
+import { ProfileInfo } from '@/features/profile/ui'
+import { DataType } from '@/features/profile/ui/profile-info/profile-info.tsx'
 
 export const Profile = () => {
   const { data } = useGetMeQuery()
@@ -10,7 +11,6 @@ export const Profile = () => {
     const form = new FormData()
 
     Object.keys(data).forEach(key => {
-      //form.append('name', data.name)
       form.append(key, data[key as keyof EditProfileFormProps])
     })
     updateProfile(form)
