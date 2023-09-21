@@ -4,12 +4,10 @@ import { Deck, useDeleteDeckMutation } from '../../model/services'
 
 import s from './pack-row.module.scss'
 
-import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { IconButton } from '@/components/ui/icon-button'
-import { ModalWindow } from '@/components/ui/modal-window'
 import { Table } from '@/components/ui/table'
-import { Typography } from '@/components/ui/typography'
+import { DeleteDialog } from '@/features/packs/ui'
 
 type Props = {
   pack: Deck
@@ -34,18 +32,7 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
 
   return (
     <>
-      <ModalWindow open={open} setOpen={setOpen} title="Delete Pack">
-        <Typography>
-          Do you really want to remove Pack Name? <br />
-          All cards will be deleted.
-        </Typography>
-        <div className={s.modalButtons}>
-          <Button variant="secondary" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button onClick={onConfirm}>Delete Pack</Button>
-        </div>
-      </ModalWindow>
+      <DeleteDialog open={open} setOpen={setOpen} onCancel={onCancel} onConfirm={onConfirm} />
 
       <Table.Row key={pack.id}>
         <Table.Cell>{pack.name}</Table.Cell>
@@ -56,7 +43,11 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
           {isMyPack ? (
             <div className={s.buttons}>
               <IconButton icon={<Icon name={'edit'} width={16} height={16} />} small />
-              <IconButton icon={<Icon name={'play'} width={16} height={16} />} small />
+              <IconButton
+                icon={<Icon name={'play'} width={16} height={16} />}
+                disabled={!pack.cardsCount}
+                small
+              />
               <IconButton
                 icon={<Icon name={'trash-bin'} width={16} height={16} />}
                 onClick={() => setOpen(true)}
@@ -64,7 +55,11 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
               />
             </div>
           ) : (
-            <IconButton icon={<Icon name={'play'} width={16} height={16} />} small />
+            <IconButton
+              icon={<Icon name={'play'} width={16} height={16} />}
+              disabled={!pack.cardsCount}
+              small
+            />
           )}
         </Table.Cell>
       </Table.Row>
