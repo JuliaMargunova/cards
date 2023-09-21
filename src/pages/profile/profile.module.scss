@@ -1,75 +1,27 @@
-@import '@/styles/mixins';
+.button {
+  margin-bottom: 24px;
 
-.root {
-  @include container(420px);
+  svg {
+    fill: var(--color-light-100);
+  }
 
-  .content {
-    @include flex(column, 15px, 0, center);
-
-    .form {
-      align-self: stretch;
+  &:hover {
+    svg {
+      fill: var(--color-accent-100);
     }
 
-    .icon {
-      cursor: pointer;
-      fill: #fff;
+    .text {
+      color: var(--color-accent-100);
+    }
+  }
+
+  &:active {
+    svg {
+      fill: var(--color-accent-500);
     }
 
-    .avatarContainer {
-      position: relative;
-    }
-
-    .editImage {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: 4px;
-    }
-
-    .avatar {
-      object-fit: cover;
-    }
-
-    .userName {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .editNickname {
-      all: unset;
-
-      display: grid;
-      place-items: center;
-
-      width: 24px;
-      height: 24px;
-      margin: 0;
-      padding: 0;
-
-      background-color: transparent;
-      border-radius: 4px;
-
-      &:hover {
-        background-color: var(--color-dark-300);
-      }
-    }
-
-    .nickName {
-      @include flex(row, 0, 12px, center);
-    }
-
-    .iconLogout {
-      fill: #fff;
-    }
-
-    .email {
-      color: var(--color-dark-100);
+    .text {
+      color: var(--color-accent-500);
     }
   }
 }

@@ -1,4 +1,11 @@
-import { ChangeEvent, ComponentPropsWithoutRef, ElementType, useRef } from 'react'
+import {
+  ChangeEvent,
+  ComponentPropsWithoutRef,
+  ElementType,
+  ReactNode,
+  useRef,
+  DragEvent,
+} from 'react'
 
 import { clsx } from 'clsx'
 
@@ -15,7 +22,7 @@ type FileUploaderProps<T extends ElementType = 'button'> = {
   accept?: string
   as?: T
   asProps?: T extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[T] : any
-  children?: React.ReactNode
+  children?: ReactNode
 } & ComponentPropsWithoutRef<T>
 
 export const FileUploader = <T extends ElementType = 'button'>(
@@ -34,6 +41,7 @@ export const FileUploader = <T extends ElementType = 'button'>(
   } = props
 
   const inputRef = useRef<HTMLInputElement>(null)
+
   const handleFileSelected = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length) {
       const file = event.target.files[0]
@@ -47,7 +55,7 @@ export const FileUploader = <T extends ElementType = 'button'>(
     }
   }
 
-  const handleDrop = (event: React.DragEvent<HTMLInputElement>) => {
+  const handleDrop = (event: DragEvent<HTMLInputElement>) => {
     event.preventDefault()
 
     if (event.dataTransfer.files && event.dataTransfer.files.length) {
@@ -62,9 +70,10 @@ export const FileUploader = <T extends ElementType = 'button'>(
     }
   }
 
-  const handleDragOver = (event: React.DragEvent<HTMLInputElement>) => {
+  const handleDragOver = (event: DragEvent<HTMLInputElement>) => {
     event.preventDefault()
   }
+
   const classes = {
     wrapper: clsx(s.wrapper, className),
     drag: clsx(s.drag, className),

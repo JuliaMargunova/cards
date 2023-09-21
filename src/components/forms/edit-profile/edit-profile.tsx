@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react'
 
-import { DevTool } from '@hookform/devtools'
 import { clsx } from 'clsx'
 
 import s from './edit-profile.module.scss'
@@ -23,7 +22,6 @@ export const EditProfileForm = ({ onSubmit, className, initialValues }: Props) =
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes}>
-      <DevTool control={control} />
       <ControlledTextField
         control={control}
         name={'name'}

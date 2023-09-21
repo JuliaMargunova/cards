@@ -1,6 +1,6 @@
 import { FC, memo, useState } from 'react'
 
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import s from './profile-info.module.scss'
 
@@ -23,11 +23,14 @@ type PropsType = {
   update: (data: EditProfileFormProps) => void
 }
 
-export const ProfileInfo: FC<PropsType> = memo(props => {
-  const { data, update } = props
-  const [updateProfile] = useUpdateProfileMutation()
-  const [logout] = useLogoutMutation()
+export const ProfileInfo: FC<PropsType> = memo(({ data, update }) => {
   const [isEditMode, setEditMode] = useState(false)
+
+  const [updateProfile] = useUpdateProfileMutation()
+
+  const [logout] = useLogoutMutation()
+
+  const navigate = useNavigate()
 
   const onSubmit = (data: EditProfileFormProps) => {
     update(data)
@@ -39,6 +42,7 @@ export const ProfileInfo: FC<PropsType> = memo(props => {
 
   const onLogout = () => {
     logout()
+    navigate('/sign-in')
   }
 
   return (
@@ -73,13 +77,7 @@ export const ProfileInfo: FC<PropsType> = memo(props => {
               <Typography as="h2" variant="body2" className={s.email}>
                 {data.email}
               </Typography>
-              <Button
-                as={Link}
-                to="/sign-in"
-                onClick={onLogout}
-                variant="secondary"
-                className={s.logout}
-              >
+              <Button onClick={onLogout} variant="secondary" className={s.logout}>
                 <Icon className={s.icon} name={'logout'} height={16} width={16} />
                 <Typography variant={'subtitle2'}>Logout</Typography>
               </Button>
