@@ -1,9 +1,10 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 
+import s from './delete-dialog.module.scss'
+
 import { Button } from '@/components/ui/button'
 import { ModalWindow } from '@/components/ui/modal-window'
 import { Typography } from '@/components/ui/typography'
-import s from '@/features/packs/ui/pack-row/pack-row.module.scss'
 
 type Props = {
   open: boolean
