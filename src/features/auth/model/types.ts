@@ -8,7 +8,7 @@ export type LoginResponse = {
   accessToken: string
 }
 
-export type UserResponse = {
+export type ProfileResponse = {
   avatar: string
   id: string
   email: string
@@ -17,3 +17,5 @@ export type UserResponse = {
   created: string
   updated: string
 }
+
+export type UpdateProfileFormData = FormData
