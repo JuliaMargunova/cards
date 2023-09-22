@@ -3,15 +3,35 @@ import { FC, memo } from 'react'
 import { Deck } from '../../model/services'
 
 import { Table } from '@/components/ui/table'
+import { TableHeader, TableHeaderProps } from '@/components/ui/table-header'
 import { useGetMeQuery } from '@/features/auth'
 import { ProfileResponse } from '@/features/auth/model/types.ts'
 import { PackRow } from '@/features/packs/ui/pack-row/pack-row.tsx'
 
+const columns = [
+  {
+    key: 'name',
+    title: 'Name',
+  },
+  {
+    key: 'cardsCount',
+    title: 'Cards',
+  },
+  {
+    key: 'updated',
+    title: 'Last Updated',
+  },
+  {
+    key: 'created',
+    title: 'Created By',
+  },
+]
+
 type Props = {
   items: Deck[]
-}
+} & Pick<TableHeaderProps, 'sort' | 'onSort'>
 
-export const PacksTable: FC<Props> = memo(({ items }) => {
+export const PacksTable: FC<Props> = memo(({ items, ...rest }) => {
   const { data } = useGetMeQuery()
 
   const authUserId = (data as ProfileResponse).id
@@ -22,15 +42,7 @@ export const PacksTable: FC<Props> = memo(({ items }) => {
 
   return (
     <Table.Root>
-      <Table.Head>
-        <Table.Row>
-          <Table.HeadCell>Name</Table.HeadCell>
-          <Table.HeadCell>Cards</Table.HeadCell>
-          <Table.HeadCell>Last Updated</Table.HeadCell>
-          <Table.HeadCell>Created by</Table.HeadCell>
-          <Table.HeadCell></Table.HeadCell>
-        </Table.Row>
-      </Table.Head>
+      <TableHeader columns={columns} {...rest} />
       <Table.Body>
         {items.map(pack => (
           <PackRow key={pack.id} pack={pack} authUserId={authUserId} />

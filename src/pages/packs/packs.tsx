@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import s from './packs.module.scss'
 
 import { Button } from '@/components/ui/button'
 import { ModalWindow } from '@/components/ui/modal-window'
 import { Pagination } from '@/components/ui/pagination'
+import { Sort } from '@/components/ui/table-header'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { usePacksFilter, usePacksPagination } from '@/features/packs/model/hooks'
@@ -19,9 +20,17 @@ export const Packs = () => {
   const [newPackTitle, setNewPackTitle] = useState('')
   const [open, setOpen] = useState(false)
 
+  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
+  const sortedString = useMemo(() => {
+    if (!sort) return ''
+
+    return `${sort.key}-${sort.direction}`
+  }, [sort])
+
   const packs = useGetDecksQuery({
     authorId: tabValue,
     name: searchName,
+    orderBy: sortedString,
     currentPage,
     itemsPerPage: pageSize,
     minCardsCount: sliderValue[0],
@@ -69,7 +78,7 @@ export const Packs = () => {
           setTabValue={setTabValue}
         />
       </div>
-      {packs?.data?.items && <PacksTable items={packs.data.items} />}
+      {packs?.data?.items && <PacksTable items={packs.data.items} sort={sort} onSort={setSort} />}
       <Pagination
         totalCount={packs?.data?.pagination.totalItems}
         currentPage={currentPage}
