@@ -36,9 +36,9 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
 
       <Table.Row key={pack.id}>
         <Table.Cell>{pack.name}</Table.Cell>
-        <Table.Cell>{pack.cardsCount}</Table.Cell>
-        <Table.Cell>{new Date(pack.updated).toLocaleDateString()}</Table.Cell>
-        <Table.Cell>{pack.author.name}</Table.Cell>
+        <Table.Cell className={s.count}>{pack.cardsCount}</Table.Cell>
+        <Table.Cell className={s.date}>{new Date(pack.updated).toLocaleDateString()}</Table.Cell>
+        <Table.Cell className={s.name}>{pack.author.name}</Table.Cell>
         <Table.Cell className={s.controls}>
           {isMyPack ? (
             <div className={s.buttons}>
