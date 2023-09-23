@@ -2,11 +2,11 @@ import { useEffect, useMemo, useState } from 'react'
 
 import s from './packs.module.scss'
 
+import { PackForm } from '@/components/forms/pack'
 import { Button } from '@/components/ui/button'
 import { ModalWindow } from '@/components/ui/modal-window'
 import { Pagination } from '@/components/ui/pagination'
 import { Sort } from '@/components/ui/table-header'
-import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { usePacksFilter, usePacksPagination } from '@/features/packs/model/hooks'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/features/packs/model/services'
@@ -17,7 +17,6 @@ export const Packs = () => {
   const { searchName, tabValue, sliderValue, setSearchName, setTabValue, setSliderValue } =
     usePacksFilter()
 
-  const [newPackTitle, setNewPackTitle] = useState('')
   const [open, setOpen] = useState(false)
 
   const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
@@ -43,23 +42,16 @@ export const Packs = () => {
 
   const [createDeck] = useCreateDeckMutation()
 
-  const createDeckHandler = () => {
-    createDeck({ name: newPackTitle })
-    setNewPackTitle('')
-    setOpen(false)
-  }
+  // const createDeckHandler = () => {
+  //   createDeck({ name: newPackTitle })
+  //   setNewPackTitle('')
+  //   setOpen(false)
+  // }
 
   return (
     <div className={s.root}>
       <ModalWindow open={open} setOpen={setOpen} title="Create new pack">
-        <TextField
-          value={newPackTitle}
-          onChange={e => setNewPackTitle(e.currentTarget.value)}
-          label="Enter title"
-        />
-        <Button onClick={createDeckHandler} style={{ marginTop: '36px' }}>
-          Create
-        </Button>
+        <PackForm onSubmit={createDeck} />
       </ModalWindow>
       <div className={s.header}>
         <div className={s.top}>
