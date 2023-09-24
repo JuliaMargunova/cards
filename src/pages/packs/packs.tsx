@@ -42,16 +42,15 @@ export const Packs = () => {
 
   const [createDeck] = useCreateDeckMutation()
 
-  // const createDeckHandler = () => {
-  //   createDeck({ name: newPackTitle })
-  //   setNewPackTitle('')
-  //   setOpen(false)
-  // }
+  const createDeckHandler = (data: FormData) => {
+    createDeck(data)
+    setOpen(false)
+  }
 
   return (
     <div className={s.root}>
       <ModalWindow open={open} setOpen={setOpen} title="Create new pack">
-        <PackForm onSubmit={createDeck} />
+        <PackForm onSubmit={createDeckHandler} onCancel={() => setOpen(false)} />
       </ModalWindow>
       <div className={s.header}>
         <div className={s.top}>

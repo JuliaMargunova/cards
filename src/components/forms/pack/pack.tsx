@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react'
 
-import { DevTool } from '@hookform/devtools'
 import { SafeParseReturnType } from 'zod'
 
 import s from './pack.module.scss'
@@ -10,17 +9,19 @@ import { ControlledCheckbox, ControlledTextField } from '@/components/controlled
 import { ControlledFileUploader } from '@/components/controlled/controlled-file-uploader'
 import { PackFormType, usePackForm } from '@/components/forms/pack/use-pack-form.ts'
 import { Button } from '@/components/ui/button'
+import { Typography } from '@/components/ui/typography'
 
 type Props = {
   onSubmit: (data: FormData) => void
   defaultValues?: PackFormType
+  onCancel: () => void
 }
 
 export type CustomFile = SafeParseReturnType<File | undefined, File | undefined> | undefined
 
-export const PackForm: FC<Props> = ({ onSubmit, defaultValues }) => {
-  // const [imgError, setImgError] = useState('')
+export const PackForm: FC<Props> = ({ onSubmit, defaultValues, onCancel }) => {
   const [downloaded, setDownloaded] = useState<string>('')
+
   const values: PackFormType = defaultValues || {
     name: '',
     isPrivate: false,
@@ -56,24 +57,30 @@ export const PackForm: FC<Props> = ({ onSubmit, defaultValues }) => {
 
     form.append('name', data.name)
     form.append('isPrivate', `${data.isPrivate}`)
-    data.cover.data && form.append('cover', data.cover.data)
+    data.cover?.data && form.append('cover', data.cover.data)
 
     onSubmit(form)
   }
 
   return (
-    <form onSubmit={handleSubmit(sendHandler)}>
-      <DevTool control={control} />
+    <form onSubmit={handleSubmit(sendHandler)} className={s.form}>
       <img src={downloaded || noCover} alt={'img'} className={s.image} />
+      {typeof errors?.cover?.message === 'string' && (
+        <Typography variant="caption" className={s.error}>
+          {errors.cover.message}
+        </Typography>
+      )}
       <ControlledFileUploader control={control} name="cover" variant="secondary" fullWidth>
         Choose cover
       </ControlledFileUploader>
       <ControlledTextField control={control} name={'name'} label="Name Pack" />
       <ControlledCheckbox control={control} name={'isPrivate'} label="Private Pack" />
-      {typeof errors?.cover?.message === 'string' && (
-        <p style={{ color: 'red' }}>{errors.cover.message}</p>
-      )}
-      <Button>Send</Button>
+      <div className={s.controls}>
+        <Button type="button" variant="secondary" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button>Send</Button>
+      </div>
     </form>
   )
 }

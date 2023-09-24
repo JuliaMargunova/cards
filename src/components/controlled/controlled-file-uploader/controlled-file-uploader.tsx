@@ -21,6 +21,7 @@ export const ControlledFileUploader = <T extends FieldValues>({
   ...restProps
 }: Props<T>) => {
   const inputRef = useRef<HTMLInputElement>(null)
+
   const scheme = z
     .instanceof(File)
     .refine(file => file.size <= 1000000, `Max image size is 1MB.`)
@@ -36,12 +37,14 @@ export const ControlledFileUploader = <T extends FieldValues>({
     name,
     control,
   })
+
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     const res = scheme.safeParse(file)
 
     if (res) onChange(res)
   }
+
   const classes = clsx(s.wrapper, className)
 
   return (
