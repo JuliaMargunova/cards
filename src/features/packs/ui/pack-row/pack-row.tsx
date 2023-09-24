@@ -35,7 +35,10 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
       <DeleteDialog open={open} setOpen={setOpen} onCancel={onCancel} onConfirm={onConfirm} />
 
       <Table.Row key={pack.id}>
-        <Table.Cell>{pack.name}</Table.Cell>
+        <Table.Cell className={s.title}>
+          {pack.cover && <img src={pack.cover} alt="Pack cover" className={s.cover} />}
+          {pack.name}
+        </Table.Cell>
         <Table.Cell className={s.count}>{pack.cardsCount}</Table.Cell>
         <Table.Cell className={s.date}>{new Date(pack.updated).toLocaleDateString()}</Table.Cell>
         <Table.Cell className={s.name}>{pack.author.name}</Table.Cell>

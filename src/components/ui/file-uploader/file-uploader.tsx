@@ -18,7 +18,7 @@ type FileUploaderProps<T extends ElementType = 'button'> = {
   update: (formData: FormData) => void
   className?: string
   mode?: 'button' | 'drag'
-  validate: (file: File) => boolean
+  validate: ((file: File) => boolean) | null
   accept?: string
   as?: T
   asProps?: T extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[T] : any
@@ -42,14 +42,15 @@ export const FileUploader = <T extends ElementType = 'button'>(
 
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleFileSelected = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelected = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length) {
       const file = event.target.files[0]
 
-      if (validate(file)) {
+      if (validate === null || validate(file)) {
         const formData = new FormData()
 
-        formData.append('avatar', event.target.files[0])
+        await formData.append('avatar', event.target.files[0])
+
         update(formData)
       }
     }
@@ -61,7 +62,7 @@ export const FileUploader = <T extends ElementType = 'button'>(
     if (event.dataTransfer.files && event.dataTransfer.files.length) {
       const file = event.dataTransfer.files[0]
 
-      if (validate(file)) {
+      if (validate === null || validate(file)) {
         const formData = new FormData()
 
         formData.append('avatar', file)
