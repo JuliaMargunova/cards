@@ -1,12 +1,16 @@
 import { FC, memo, useState } from 'react'
 
+import { Link } from 'react-router-dom'
+
 import { Deck, useDeleteDeckMutation } from '../../model/services'
 
 import s from './pack-row.module.scss'
 
+import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { IconButton } from '@/components/ui/icon-button'
 import { Table } from '@/components/ui/table'
+import { Typography } from '@/components/ui/typography'
 import { DeleteDialog, EditPackModal } from '@/features/packs/ui'
 
 type Props = {
@@ -17,29 +21,29 @@ type Props = {
 export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
   const isMyPack = authUserId === pack.author.id
 
-  const [open, setOpen] = useState(false)
+  const [createIsOpen, setCreateIsOpen] = useState(false)
   const [editIsOpen, setEditIsOpen] = useState(false)
 
   const [deletePack] = useDeleteDeckMutation()
 
   const onConfirm = () => {
     deletePack({ id: pack.id })
-    setOpen(false)
-  }
-
-  const onCancel = () => {
-    setOpen(false)
+    setCreateIsOpen(false)
   }
 
   return (
     <>
-      <DeleteDialog open={open} setOpen={setOpen} onCancel={onCancel} onConfirm={onConfirm} />
+      <DeleteDialog open={createIsOpen} setOpen={setCreateIsOpen} onConfirm={onConfirm} />
       <EditPackModal open={editIsOpen} setOpen={setEditIsOpen} pack={pack} />
 
       <Table.Row key={pack.id}>
-        <Table.Cell className={s.title}>
-          {pack.cover && <img src={pack.cover} alt="Pack cover" className={s.cover} />}
-          {pack.name}
+        <Table.Cell>
+          <Button as={Link} to={pack.id} variant="link" className={s.link}>
+            {pack.cover && <img src={pack.cover} alt="Pack cover" className={s.cover} />}
+            <Typography as="h3" variant="body2">
+              {pack.name}
+            </Typography>
+          </Button>
         </Table.Cell>
         <Table.Cell className={s.count}>{pack.cardsCount}</Table.Cell>
         <Table.Cell className={s.date}>{new Date(pack.updated).toLocaleDateString()}</Table.Cell>
@@ -59,7 +63,7 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
               />
               <IconButton
                 icon={<Icon name={'trash-bin'} width={16} height={16} />}
-                onClick={() => setOpen(true)}
+                onClick={() => setCreateIsOpen(true)}
                 small
               />
             </div>

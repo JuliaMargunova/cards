@@ -48,7 +48,7 @@ export const Packs = () => {
   }
 
   return (
-    <div className={s.root}>
+    <section className={s.root}>
       <ModalWindow open={open} setOpen={setOpen} title="Create new pack">
         <PackForm onSubmit={createDeckHandler} onCancel={() => setOpen(false)} />
       </ModalWindow>
@@ -78,6 +78,6 @@ export const Packs = () => {
         onPageSizeChange={setPageSize}
         className={s.pagination}
       />
-    </div>
+    </section>
   )
 }

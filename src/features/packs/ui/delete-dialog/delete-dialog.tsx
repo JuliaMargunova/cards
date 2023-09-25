@@ -9,11 +9,14 @@ import { Typography } from '@/components/ui/typography'
 type Props = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  onCancel: () => void
   onConfirm: () => void
 }
 
-export const DeleteDialog: FC<Props> = ({ open, setOpen, onCancel, onConfirm }) => {
+export const DeleteDialog: FC<Props> = ({ open, setOpen, onConfirm }) => {
+  const onCancel = () => {
+    setOpen(false)
+  }
+
   return (
     <ModalWindow open={open} setOpen={setOpen} title="Delete Pack">
       <Typography>
