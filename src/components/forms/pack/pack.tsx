@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import { SafeParseReturnType } from 'zod'
+import { DevTool } from '@hookform/devtools'
 
 import s from './pack.module.scss'
 
@@ -9,6 +9,7 @@ import { ControlledCheckbox, ControlledTextField } from '@/components/controlled
 import { ControlledFileUploader } from '@/components/controlled/controlled-file-uploader'
 import { PackFormType, usePackForm } from '@/components/forms/pack/use-pack-form.ts'
 import { Button } from '@/components/ui/button'
+import { Icon } from '@/components/ui/icon/icon.tsx'
 import { Typography } from '@/components/ui/typography'
 
 type Props = {
@@ -17,14 +18,12 @@ type Props = {
   onCancel: () => void
 }
 
-export type CustomFile = SafeParseReturnType<File | undefined, File | undefined> | undefined
-
 export const PackForm: FC<Props> = ({ onSubmit, defaultValues, onCancel }) => {
-  const [downloaded, setDownloaded] = useState<string>('')
+  const [downloaded, setDownloaded] = useState<string>(defaultValues?.cover || '')
 
-  const values: PackFormType = defaultValues || {
-    name: '',
-    isPrivate: false,
+  const values: PackFormType = {
+    name: defaultValues?.name || '',
+    isPrivate: defaultValues?.isPrivate || false,
   }
 
   const {
@@ -33,37 +32,38 @@ export const PackForm: FC<Props> = ({ onSubmit, defaultValues, onCancel }) => {
     setError,
     clearErrors,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = usePackForm(values)
 
-  useEffect(() => {
-    const file = watch('cover') as CustomFile
+  const file = watch('cover')
+  const fileIsDirty = dirtyFields.cover
 
+  useEffect(() => {
     if (file && 'error' in file) {
       setError('cover', { type: 'custom', message: file.error.errors[0].message })
     }
 
-    if (file && 'data' in file) {
+    if (fileIsDirty && file && 'data' in file) {
       const img = URL.createObjectURL(file.data as File)
 
       if (errors.cover) clearErrors('cover')
-
       setDownloaded(img)
     }
-  }, [watch('cover')])
+  }, [file])
 
   const sendHandler = (data: PackFormType) => {
     const form = new FormData()
 
     form.append('name', data.name)
     form.append('isPrivate', `${data.isPrivate}`)
-    data.cover?.data && form.append('cover', data.cover.data)
+    fileIsDirty && data.cover?.data && form.append('cover', data.cover.data)
 
     onSubmit(form)
   }
 
   return (
     <form onSubmit={handleSubmit(sendHandler)} className={s.form}>
+      <DevTool control={control} />
       <img src={downloaded || noCover} alt={'img'} className={s.image} />
       {typeof errors?.cover?.message === 'string' && (
         <Typography variant="caption" className={s.error}>
@@ -71,7 +71,8 @@ export const PackForm: FC<Props> = ({ onSubmit, defaultValues, onCancel }) => {
         </Typography>
       )}
       <ControlledFileUploader control={control} name="cover" variant="secondary" fullWidth>
-        Choose cover
+        <Icon name="image" className={s.imgIcon} width={20} height={20} />
+        Change Cover
       </ControlledFileUploader>
       <ControlledTextField control={control} name={'name'} label="Name Pack" />
       <ControlledCheckbox control={control} name={'isPrivate'} label="Private Pack" />

@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const packSchema = z.object({
+export const packSchema = z.object({
   name: z.string().nonempty('Required').min(3, 'The name must be at least 3 characters'),
   isPrivate: z.boolean(),
   cover: z.any().optional(),

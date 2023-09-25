@@ -9,6 +9,10 @@
     object-fit: cover;
   }
 
+  .imgIcon {
+    fill: var(--color-light-100);
+  }
+
   .controls {
     @include flex(row, 0, 0, center, space-between);
   }
