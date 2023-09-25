@@ -7,7 +7,7 @@ import s from './pack-row.module.scss'
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { IconButton } from '@/components/ui/icon-button'
 import { Table } from '@/components/ui/table'
-import { DeleteDialog } from '@/features/packs/ui'
+import { DeleteDialog, EditPackModal } from '@/features/packs/ui'
 
 type Props = {
   pack: Deck
@@ -18,6 +18,7 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
   const isMyPack = authUserId === pack.author.id
 
   const [open, setOpen] = useState(false)
+  const [editIsOpen, setEditIsOpen] = useState(false)
 
   const [deletePack] = useDeleteDeckMutation()
 
@@ -33,6 +34,7 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
   return (
     <>
       <DeleteDialog open={open} setOpen={setOpen} onCancel={onCancel} onConfirm={onConfirm} />
+      <EditPackModal open={editIsOpen} setOpen={setEditIsOpen} pack={pack} />
 
       <Table.Row key={pack.id}>
         <Table.Cell className={s.title}>
@@ -45,7 +47,11 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
         <Table.Cell className={s.controls}>
           {isMyPack ? (
             <div className={s.buttons}>
-              <IconButton icon={<Icon name={'edit'} width={16} height={16} />} small />
+              <IconButton
+                icon={<Icon name={'edit'} width={16} height={16} />}
+                onClick={() => setEditIsOpen(true)}
+                small
+              />
               <IconButton
                 icon={<Icon name={'play'} width={16} height={16} />}
                 disabled={!pack.cardsCount}
