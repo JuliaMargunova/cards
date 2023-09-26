@@ -21,11 +21,6 @@ export const Selected: Story = {
   },
 }
 
-export const TotalStars: Story = {
-  args: {
-    totalStars: 10,
-  },
-}
 export const Size: Story = {
   args: {
     size: 25,

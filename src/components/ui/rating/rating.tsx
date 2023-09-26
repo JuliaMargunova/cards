@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { memo } from 'react'
 
 import { clsx } from 'clsx'
 
@@ -8,57 +8,26 @@ import { Icon } from '@/components/ui/icon/icon.tsx'
 
 type RatingProps = {
   className?: string
-  onSelect?: (starsCount: number) => void
   size?: number
   selectedStars?: number
-  totalStars?: number
 }
 
+const stars = [1, 2, 3, 4, 5]
+
 export const Rating = memo((props: RatingProps) => {
-  const { className, size = 16, selectedStars = 0, onSelect, totalStars = 5 } = props
-  const [currentStarsCount, setCurrentStarsCount] = useState(selectedStars)
-  const [isSelected, setIsSelected] = useState(Boolean(selectedStars))
-
-  const onHover = (starsCount: number) => () => {
-    if (!isSelected) {
-      setCurrentStarsCount(starsCount)
-    }
-  }
-
-  const onLeave = () => {
-    if (!isSelected) {
-      setCurrentStarsCount(0)
-    }
-  }
-
-  const onClick = (starsCount: number) => () => {
-    if (!isSelected) {
-      onSelect?.(starsCount)
-      setCurrentStarsCount(starsCount)
-      setIsSelected(true)
-    }
-  }
+  const { className, size = 16, selectedStars = 0 } = props
 
   return (
     <div className={className}>
-      {Array.from({ length: totalStars }, (_, index) => {
-        const starNumber = index + 1
-
-        return (
-          <Icon
-            className={clsx(s.starIcon, currentStarsCount >= starNumber ? s.hovered : s.normal, {
-              [s.selected]: isSelected,
-            })}
-            name={'star'}
-            key={starNumber}
-            width={size}
-            height={size}
-            onMouseLeave={onLeave}
-            onMouseEnter={onHover(starNumber)}
-            onClick={onClick(starNumber)}
-          />
-        )
-      })}
+      {stars.map(starNumber => (
+        <Icon
+          className={clsx(s.starIcon, selectedStars >= starNumber ? s.hovered : s.normal)}
+          name={'star'}
+          key={starNumber}
+          width={size}
+          height={size}
+        />
+      ))}
     </div>
   )
 })

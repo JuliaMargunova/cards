@@ -1,5 +1,5 @@
-.starIcon {
-  cursor: pointer;
+.starIcon:not(:last-child) {
+  margin-right: 10px;
 }
 
 .normal {
@@ -8,8 +8,4 @@
 
 .hovered {
   fill: var(--color-warning-300);
-}
-
-.selected {
-  cursor: auto;
 }
