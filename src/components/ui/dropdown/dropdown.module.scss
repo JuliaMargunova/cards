@@ -2,9 +2,18 @@
 
 .trigger {
   cursor: pointer;
+
   background: inherit;
   border: none;
   outline: none;
+
+  fill: var(--color-light-100);
+  stroke: var(--color-light-100);
+
+  &:hover svg {
+    fill: var(--color-accent-100);
+    stroke: var(--color-accent-100);
+  }
 
   .btn {
     @include flex(row, 0, 0, center, center);

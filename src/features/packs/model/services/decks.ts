@@ -36,6 +36,12 @@ const decksAPI = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['Decks'],
     }),
+    getDeckInfo: builder.query<Omit<Deck, 'author'>, { id: string }>({
+      query: ({ id }) => ({
+        url: `v1/decks/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
@@ -44,4 +50,5 @@ export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useUpdateDeckMutation,
+  useGetDeckInfoQuery,
 } = decksAPI

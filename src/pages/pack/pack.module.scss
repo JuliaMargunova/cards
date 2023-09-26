@@ -1,8 +1,6 @@
 @import '@/pages/packs/packs.module';
 
 .root {
-  border: 1px solid #333;
-
   .button {
     margin-bottom: 24px;
 
@@ -27,6 +25,25 @@
 
       .text {
         color: var(--color-accent-500);
+      }
+    }
+  }
+
+  .header {
+    margin-bottom: 36px;
+
+    .cover {
+      height: 100px;
+      margin-bottom: 24px;
+    }
+
+    .top {
+      @include flex(row, 0, 0, center, space-between);
+
+      margin-bottom: 24px;
+
+      .title {
+        @include flex(row, 0, 12px, flex-end, center);
       }
     }
   }
