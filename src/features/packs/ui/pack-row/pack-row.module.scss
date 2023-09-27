@@ -1,5 +1,27 @@
 @import '@/styles/mixins';
 
+.title {
+  @include flex(row, 0, 24px, center);
+
+  .cover {
+    height: 50px;
+  }
+}
+
+@media (width >= 950px) {
+  .date {
+    width: 180px;
+  }
+
+  .name {
+    width: 200px;
+  }
+}
+
+.count {
+  width: 150px;
+}
+
 .controls {
   width: 125px;
   text-align: center;
