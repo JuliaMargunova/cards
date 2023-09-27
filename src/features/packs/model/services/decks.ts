@@ -34,7 +34,14 @@ const decksAPI = baseAPI.injectEndpoints({
         method: 'PATCH',
         body: data,
       }),
-      invalidatesTags: ['Decks'],
+      invalidatesTags: ['Decks', 'Deck'],
+    }),
+    getDeckInfo: builder.query<Omit<Deck, 'author'>, { id: string }>({
+      query: ({ id }) => ({
+        url: `v1/decks/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Deck'],
     }),
   }),
 })
@@ -44,4 +51,5 @@ export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useUpdateDeckMutation,
+  useGetDeckInfoQuery,
 } = decksAPI
