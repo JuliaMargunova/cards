@@ -1,13 +1,14 @@
-import { FC, memo } from 'react'
+import { FC, memo, useState } from 'react'
 
 import s from './card-row.module.scss'
 
+import { Dialog } from '@/components/ui/dialog/dialog.tsx'
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { IconButton } from '@/components/ui/icon-button'
 import { Rating } from '@/components/ui/rating'
 import { Table } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
-import { Card } from '@/features/cards/model/services'
+import { Card, useDeleteCardMutation } from '@/features/cards/model/services'
 
 type Props = {
   card: Card
@@ -15,19 +16,26 @@ type Props = {
 }
 
 export const CardRow: FC<Props> = memo(({ card, isMyPack }) => {
-  // const [deleteIsOpen, setDeleteIsOpen] = useState(false)
-  // const [editIsOpen, setEditIsOpen] = useState(false)
-  //
-  // const deleteCard = () => {}
-  //
-  // const onConfirm = () => {
-  //   deleteCard()
-  //   setDeleteIsOpen(false)
-  // }
+  const [deleteIsOpen, setDeleteIsOpen] = useState(false)
+  //const [editIsOpen, setEditIsOpen] = useState(false)
+
+  const [deleteCard] = useDeleteCardMutation()
+
+  const onConfirm = () => {
+    deleteCard({ id: card.id })
+    setDeleteIsOpen(false)
+  }
 
   return (
     <>
-      {/*<DeleteDialog open={deleteIsOpen} setOpen={setDeleteIsOpen} onConfirm={onConfirm} />*/}
+      <Dialog
+        title="Delete Card"
+        description="Do you really want to remove this card?"
+        buttonText="Delete Card"
+        open={deleteIsOpen}
+        setOpen={setDeleteIsOpen}
+        onConfirm={onConfirm}
+      />
       {/*<EditPackModal open={editIsOpen} setOpen={setEditIsOpen} pack={card} />*/}
 
       <Table.Row key={card.id}>
@@ -56,7 +64,7 @@ export const CardRow: FC<Props> = memo(({ card, isMyPack }) => {
             <div className={s.buttons}>
               <IconButton
                 icon={<Icon name={'edit'} width={16} height={16} />}
-                onClick={() => setEditIsOpen(true)}
+                // onClick={() => ()}
                 small
               />
               <IconButton

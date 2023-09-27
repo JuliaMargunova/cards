@@ -7,11 +7,12 @@ import { Deck, useDeleteDeckMutation } from '../../model/services'
 import s from './pack-row.module.scss'
 
 import { Button } from '@/components/ui/button'
+import { Dialog } from '@/components/ui/dialog/dialog.tsx'
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { IconButton } from '@/components/ui/icon-button'
 import { Table } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
-import { DeleteDialog, EditPackModal } from '@/features/packs/ui'
+import { EditPackModal } from '@/features/packs/ui'
 
 type Props = {
   pack: Deck
@@ -23,14 +24,14 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
 
   const navigate = useNavigate()
 
-  const [createIsOpen, setCreateIsOpen] = useState(false)
+  const [deleteIsOpen, setDeleteIsOpen] = useState(false)
   const [editIsOpen, setEditIsOpen] = useState(false)
 
   const [deletePack] = useDeleteDeckMutation()
 
   const onConfirm = () => {
     deletePack({ id: pack.id })
-    setCreateIsOpen(false)
+    setDeleteIsOpen(false)
   }
 
   const onLearn = () => {
@@ -39,7 +40,15 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
 
   return (
     <>
-      <DeleteDialog open={createIsOpen} setOpen={setCreateIsOpen} onConfirm={onConfirm} />
+      <Dialog
+        title="Delete Pack"
+        description={`Do you really want to remove ${pack.name}? All cards will be deleted.`}
+        buttonText="Delete Pack"
+        open={deleteIsOpen}
+        setOpen={setDeleteIsOpen}
+        onConfirm={onConfirm}
+        splitLines
+      />
       <EditPackModal open={editIsOpen} setOpen={setEditIsOpen} pack={pack} />
 
       <Table.Row key={pack.id}>
@@ -70,7 +79,7 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
               />
               <IconButton
                 icon={<Icon name={'trash-bin'} width={16} height={16} />}
-                onClick={() => setCreateIsOpen(true)}
+                onClick={() => setDeleteIsOpen(true)}
                 small
               />
             </div>
