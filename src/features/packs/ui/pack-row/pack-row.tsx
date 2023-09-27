@@ -49,7 +49,14 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
         onConfirm={onConfirm}
         splitLines
       />
-      <EditPackModal open={editIsOpen} setOpen={setEditIsOpen} pack={pack} />
+      <EditPackModal
+        open={editIsOpen}
+        setOpen={setEditIsOpen}
+        id={pack.id}
+        name={pack.name}
+        isPrivate={pack.isPrivate}
+        cover={pack.cover}
+      />
 
       <Table.Row key={pack.id}>
         <Table.Cell>

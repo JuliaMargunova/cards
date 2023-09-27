@@ -16,6 +16,7 @@ import { ProfileResponse } from '@/features/auth/model/types.ts'
 import { useGetCardsQuery } from '@/features/cards/model/services'
 import { CardsTable } from '@/features/cards/ui/cards-table/cards-table.tsx'
 import { useGetDeckInfoQuery } from '@/features/packs/model/services'
+import { EditPackModal } from '@/features/packs/ui'
 
 export const Pack = () => {
   const navigate = useNavigate()
@@ -50,10 +51,22 @@ export const Pack = () => {
     },
   })
 
+  const [editIsOpen, setEditIsOpen] = useState(false)
+
   if (packLoading) return <p>Loading...</p>
 
   return (
     <section className={s.root}>
+      {pack && (
+        <EditPackModal
+          open={editIsOpen}
+          setOpen={setEditIsOpen}
+          id={pack.id}
+          name={pack.name}
+          isPrivate={pack.isPrivate}
+          cover={pack.cover}
+        />
+      )}
       <Button as={Link} to="/packs" variant="link" className={s.button}>
         <Icon name={'arrow-back'} width={22} height={22} />
         <Typography variant="body2" className={s.text}>
@@ -71,7 +84,11 @@ export const Pack = () => {
                   icon={<Icon name="play" />}
                   text="Learn"
                 />
-                <DropDownItemWithIcon icon={<Icon name="edit" />} text="Edit" />
+                <DropDownItemWithIcon
+                  onSelect={() => setEditIsOpen(true)}
+                  icon={<Icon name="edit" />}
+                  text="Edit"
+                />
                 <DropDownItemWithIcon icon={<Icon name="delete" />} text="Delete" />
               </DropDown>
             )}
