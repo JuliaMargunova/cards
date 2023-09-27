@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import s from './pack.module.scss'
 
@@ -18,6 +18,8 @@ import { CardsTable } from '@/features/cards/ui/cards-table/cards-table.tsx'
 import { useGetDeckInfoQuery } from '@/features/packs/model/services'
 
 export const Pack = () => {
+  const navigate = useNavigate()
+
   const { id: packId } = useParams()
   const { data: pack, isLoading: packLoading } = useGetDeckInfoQuery({ id: packId as string })
   const authorId = pack?.userId
@@ -48,8 +50,6 @@ export const Pack = () => {
     },
   })
 
-  const onClear = () => {}
-
   if (packLoading) return <p>Loading...</p>
 
   return (
@@ -66,19 +66,29 @@ export const Pack = () => {
             {pack?.name}
             {isMyPack && (
               <DropDown>
-                <DropDownItemWithIcon icon={<Icon name="play" />} text="Learn" />
+                <DropDownItemWithIcon
+                  onSelect={() => navigate(`./learn`)}
+                  icon={<Icon name="play" />}
+                  text="Learn"
+                />
                 <DropDownItemWithIcon icon={<Icon name="edit" />} text="Edit" />
                 <DropDownItemWithIcon icon={<Icon name="delete" />} text="Delete" />
               </DropDown>
             )}
           </Typography>
-          <Button onClick={() => alert('a')}>{isMyPack ? 'Add New Card' : 'Learn Cards'}</Button>
+          {isMyPack ? (
+            <Button onClick={() => alert('add card')}>Add New Card</Button>
+          ) : (
+            <Button as={Link} to={`./learn`}>
+              Learn Cards
+            </Button>
+          )}
         </div>
         {pack?.cover && <img src={pack.cover} alt="Cover" className={s.cover} />}
         <TextField
           type="search"
           value={searchName}
-          placeholder="Search by question or answer"
+          placeholder="Search by question"
           onChange={e => setSearchName(e.currentTarget.value)}
           clearField={() => setSearchName('')}
         />

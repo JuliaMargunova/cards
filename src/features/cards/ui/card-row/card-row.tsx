@@ -4,6 +4,7 @@ import s from './card-row.module.scss'
 
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { IconButton } from '@/components/ui/icon-button'
+import { Rating } from '@/components/ui/rating'
 import { Table } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
 import { Card } from '@/features/cards/model/services'
@@ -47,7 +48,9 @@ export const CardRow: FC<Props> = memo(({ card, isMyPack }) => {
           </div>
         </Table.Cell>
         <Table.Cell className={s.date}>{new Date(card.updated).toLocaleDateString()}</Table.Cell>
-        <Table.Cell className={s.grade}>{card.grade}</Table.Cell>
+        <Table.Cell className={s.grade}>
+          <Rating selectedStars={card.grade} />
+        </Table.Cell>
         {isMyPack && (
           <Table.Cell className={s.controls}>
             <div className={s.buttons}>

@@ -1,6 +1,6 @@
 import { FC, memo, useState } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Deck, useDeleteDeckMutation } from '../../model/services'
 
@@ -21,6 +21,8 @@ type Props = {
 export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
   const isMyPack = authUserId === pack.author.id
 
+  const navigate = useNavigate()
+
   const [createIsOpen, setCreateIsOpen] = useState(false)
   const [editIsOpen, setEditIsOpen] = useState(false)
 
@@ -29,6 +31,10 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
   const onConfirm = () => {
     deletePack({ id: pack.id })
     setCreateIsOpen(false)
+  }
+
+  const onLearn = () => {
+    navigate(`${pack.id}/learn`)
   }
 
   return (
@@ -59,6 +65,7 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
               <IconButton
                 icon={<Icon name={'play'} width={16} height={16} />}
                 disabled={!pack.cardsCount}
+                onClick={onLearn}
                 small
               />
               <IconButton

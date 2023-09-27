@@ -1,7 +1,8 @@
 @import '@/styles/mixins';
 
 .link {
-  column-gap: 16px;
+  @include flex(row, 0, 16px, center);
+
   padding-block: 0;
 
   .cover {

@@ -39,4 +39,8 @@ export const privateRoutes: RouteObject[] = [
     path: '/packs/:id',
     element: <Pack />,
   },
+  {
+    path: '/packs/:id/learn',
+    element: <div>Learn page</div>,
+  },
 ]
