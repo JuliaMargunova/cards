@@ -60,7 +60,6 @@ export const TableHeader: FC<TableHeaderProps> = ({ columns, sort, onSort, ...re
             </Table.HeadCell>
           )
         })}
-        <Table.HeadCell />
       </Table.Row>
     </Table.Head>
   )
