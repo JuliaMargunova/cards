@@ -36,7 +36,7 @@
 
     .question,
     .answer {
-      align-self: flex-start;
+      align-self: stretch;
 
       > b {
         font-weight: var(--font-weight-bold);
@@ -44,6 +44,10 @@
 
       .caption {
         color: var(--color-dark-100);
+      }
+
+      .rate {
+        padding-block: 12px;
       }
     }
   }

@@ -4,21 +4,31 @@ import { Link, useParams } from 'react-router-dom'
 
 import s from './learn.module.scss'
 
+import { RateCardForm, RateType } from '@/components/forms'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { Typography } from '@/components/ui/typography'
-import { useGetRandomCardQuery } from '@/features/cards/model/services'
+import { useGetRandomCardQuery, useRateCardMutation } from '@/features/cards/model/services'
 import { useGetDeckInfoQuery } from '@/features/packs/model/services'
 
 export const Learn = () => {
   const [rateMode, setRateMode] = useState(false)
+
+  const [previousCardId, setPreviousCardId] = useState('')
+
+  const [rateCard] = useRateCardMutation()
+
   const params = useParams()
   const id = params.id as string
   const { data: pack } = useGetDeckInfoQuery({ id })
-  const { data: card } = useGetRandomCardQuery({ id })
+  const { data: card } = useGetRandomCardQuery({ id, previousCardId })
 
-  console.log(card)
+  const onSubmit = (data: RateType) => {
+    setRateMode(false)
+    setPreviousCardId(card!.id)
+    rateCard({ cardId: card!.id, grade: +data.grade })
+  }
 
   return (
     <>
@@ -43,16 +53,15 @@ export const Learn = () => {
           </div>
 
           {rateMode ? (
-            <>
-              <div className={s.answer}>
-                <Typography variant="body1">
-                  <b>Answer:</b> {card?.answer}
-                </Typography>
-              </div>
-              <Button onClick={() => setRateMode(false)} fullWidth>
-                Next Question
-              </Button>
-            </>
+            <div className={s.answer}>
+              <Typography variant="body1">
+                <b>Answer:</b> {card?.answer}
+              </Typography>
+              <Typography variant="body1" className={s.rate}>
+                <b>Rate yourself:</b>
+              </Typography>
+              <RateCardForm onSubmit={onSubmit} />
+            </div>
           ) : (
             <Button onClick={() => setRateMode(true)} fullWidth>
               Show Answer

@@ -28,3 +28,8 @@ export type CardsParams = {
   currentPage?: number
   itemsPerPage?: number
 } | void
+
+export type CardRatePayload = {
+  cardId: string
+  grade: number
+}
