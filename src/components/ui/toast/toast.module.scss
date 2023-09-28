@@ -4,6 +4,7 @@ button {
 
 .viewport {
   --viewport-padding: 25px;
+  --viewport-padding-calc: calc(100% + var(--viewport-padding));
 
   position: fixed;
   z-index: 2147483647;
@@ -79,7 +80,7 @@ button {
 
 @keyframes slide-in {
   from {
-    transform: translateX(calc(100% + var(--viewport-padding)));
+    transform: translateX(var(--viewport-padding-calc));
   }
 
   to {
@@ -93,7 +94,7 @@ button {
   }
 
   to {
-    transform: translateX(calc(100% + var(--viewport-padding)));
+    transform: translateX(var(--viewport-padding-calc));
   }
 }
 
