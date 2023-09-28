@@ -1,16 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react'
 
 import { BrowserRouterDecorator } from '@/app/providers'
-import { CheckEmail } from '@/pages'
+import { CheckEmail } from '@/pages/check-email/check-email.tsx'
 
 const meta: Meta = {
   title: 'Pages/Check Email',
   component: CheckEmail,
-  parameters: {
-    args: {
-      email: 'e-mail@example.com',
-    },
-  },
   tags: ['autodocs'],
   decorators: [BrowserRouterDecorator],
 } satisfies Meta<typeof CheckEmail>
