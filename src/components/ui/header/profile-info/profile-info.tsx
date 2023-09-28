@@ -4,9 +4,9 @@ import s from './profile-info.module.scss'
 
 import { Avatar } from '@/components/ui/avatar'
 import { Typography } from '@/components/ui/typography'
-import { UserResponse } from '@/features/auth/model/types.ts'
+import { ProfileResponse } from '@/features/auth/model/types.ts'
 
-export type ProfileInfoProps = Pick<UserResponse, 'avatar' | 'name' | 'email'>
+export type ProfileInfoProps = Pick<ProfileResponse, 'avatar' | 'name' | 'email'>
 
 export const ProfileInfo = forwardRef<ElementRef<'div'>, ProfileInfoProps>(
   ({ avatar, name, email }, ref) => {

@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import s from './packs.module.scss'
 
+import { PackForm } from '@/components/forms/pack'
 import { Button } from '@/components/ui/button'
 import { ModalWindow } from '@/components/ui/modal-window'
 import { Pagination } from '@/components/ui/pagination'
-import { TextField } from '@/components/ui/text-field'
+import { Sort } from '@/components/ui/table-header'
 import { Typography } from '@/components/ui/typography'
 import { usePacksFilter, usePacksPagination } from '@/features/packs/model/hooks'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/features/packs/model/services'
@@ -16,12 +17,19 @@ export const Packs = () => {
   const { searchName, tabValue, sliderValue, setSearchName, setTabValue, setSliderValue } =
     usePacksFilter()
 
-  const [newPackTitle, setNewPackTitle] = useState('')
   const [open, setOpen] = useState(false)
+
+  const [sort, setSort] = useState<Sort>({ key: 'updated', direction: 'desc' })
+  const sortedString = useMemo(() => {
+    if (!sort) return ''
+
+    return `${sort.key}-${sort.direction}`
+  }, [sort])
 
   const packs = useGetDecksQuery({
     authorId: tabValue,
     name: searchName,
+    orderBy: sortedString,
     currentPage,
     itemsPerPage: pageSize,
     minCardsCount: sliderValue[0],
@@ -34,23 +42,15 @@ export const Packs = () => {
 
   const [createDeck] = useCreateDeckMutation()
 
-  const createDeckHandler = () => {
-    createDeck({ name: newPackTitle })
-    setNewPackTitle('')
+  const createDeckHandler = (data: FormData) => {
+    createDeck(data)
     setOpen(false)
   }
 
   return (
-    <div className={s.root}>
+    <section className={s.root}>
       <ModalWindow open={open} setOpen={setOpen} title="Create new pack">
-        <TextField
-          value={newPackTitle}
-          onChange={e => setNewPackTitle(e.currentTarget.value)}
-          label="Enter title"
-        />
-        <Button onClick={createDeckHandler} style={{ marginTop: '36px' }}>
-          Create
-        </Button>
+        <PackForm onSubmit={createDeckHandler} onCancel={() => setOpen(false)} />
       </ModalWindow>
       <div className={s.header}>
         <div className={s.top}>
@@ -69,7 +69,7 @@ export const Packs = () => {
           setTabValue={setTabValue}
         />
       </div>
-      {packs?.data?.items && <PacksTable items={packs.data.items} />}
+      {packs?.data?.items && <PacksTable items={packs.data.items} sort={sort} onSort={setSort} />}
       <Pagination
         totalCount={packs?.data?.pagination.totalItems}
         currentPage={currentPage}
@@ -78,6 +78,6 @@ export const Packs = () => {
         onPageSizeChange={setPageSize}
         className={s.pagination}
       />
-    </div>
+    </section>
   )
 }

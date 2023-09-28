@@ -1,6 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
-import { CheckEmail, CreateNewPassword, ForgotPassword, Packs, SignIn, SignUp } from '@/pages'
+import { CreateNewPassword, ForgotPassword, Learn, Pack, Packs, SignIn, SignUp } from '@/pages'
+import { Profile } from '@/pages/profile/profile.tsx'
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -19,10 +20,6 @@ export const publicRoutes: RouteObject[] = [
     path: '/create-new-password',
     element: <CreateNewPassword />,
   },
-  {
-    path: '/check-email/:email',
-    element: <CheckEmail />,
-  },
 ]
 
 export const privateRoutes: RouteObject[] = [
@@ -33,5 +30,17 @@ export const privateRoutes: RouteObject[] = [
   {
     path: '/packs',
     element: <Packs />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
+  },
+  {
+    path: '/packs/:id',
+    element: <Pack />,
+  },
+  {
+    path: '/packs/:id/learn',
+    element: <Learn />,
   },
 ]
