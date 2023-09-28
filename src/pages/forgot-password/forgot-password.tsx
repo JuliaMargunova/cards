@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 import s from './forgot-password.module.scss'
 
@@ -8,7 +8,9 @@ import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 
 export const ForgotPassword = () => {
+  const navigate = useNavigate()
   const onSubmit = (data: ForgotPasswordFormType) => {
+    navigate(`/check-email/${data.email}`)
     alert(JSON.stringify(data))
   }
 
