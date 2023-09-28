@@ -1,6 +1,6 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
-import { CreateNewPassword, ForgotPassword, Pack, Packs, SignIn, SignUp } from '@/pages'
+import { CreateNewPassword, ForgotPassword, Learn, Pack, Packs, SignIn, SignUp } from '@/pages'
 import { Profile } from '@/pages/profile/profile.tsx'
 
 export const publicRoutes: RouteObject[] = [
@@ -41,6 +41,6 @@ export const privateRoutes: RouteObject[] = [
   },
   {
     path: '/packs/:id/learn',
-    element: <div>Learn page</div>,
+    element: <Learn />,
   },
 ]
