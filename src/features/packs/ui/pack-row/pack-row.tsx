@@ -94,6 +94,7 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
             <IconButton
               icon={<Icon name={'play'} width={16} height={16} />}
               disabled={!pack.cardsCount}
+              onClick={onLearn}
               small
             />
           )}

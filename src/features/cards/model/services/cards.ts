@@ -1,4 +1,4 @@
-import { CardsParams, CardsResponse } from '@/features/cards/model/services/types.ts'
+import { Card, CardsParams, CardsResponse } from '@/features/cards/model/services/types.ts'
 import { baseAPI } from '@/services/base-api.ts'
 
 const cardsAPI = baseAPI.injectEndpoints({
@@ -19,7 +19,15 @@ const cardsAPI = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['Cards'],
     }),
+    getRandomCard: builder.query<Omit<Card, 'userId'>, { id: string; previousCardId?: string }>({
+      query: ({ id, previousCardId }) => ({
+        url: `v1/decks/${id}/learn`,
+        method: 'GET',
+        params: { previousCardId },
+      }),
+      providesTags: ['Card'],
+    }),
   }),
 })
 
-export const { useGetCardsQuery, useDeleteCardMutation } = cardsAPI
+export const { useGetCardsQuery, useDeleteCardMutation, useGetRandomCardQuery } = cardsAPI
