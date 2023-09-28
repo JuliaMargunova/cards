@@ -29,7 +29,15 @@ export type CardsParams = {
   itemsPerPage?: number
 } | void
 
-export type CardRatePayload = {
+export type CardResponse = Omit<Card, 'userId'>
+
+export type RandomCardRequest = {
+  id: string
+  previousCardId?: string
+}
+
+export type CardRateRequest = {
+  packId: string
   cardId: string
   grade: number
 }
