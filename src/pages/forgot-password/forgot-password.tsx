@@ -11,7 +11,6 @@ export const ForgotPassword = () => {
   const navigate = useNavigate()
   const onSubmit = (data: ForgotPasswordFormType) => {
     navigate(`/check-email/${data.email}`)
-    alert(JSON.stringify(data))
   }
 
   return (
