@@ -1,4 +1,9 @@
-import { CardsParams, CardsResponse } from '@/features/cards/model/services/types.ts'
+import {
+  Card,
+  CardRatePayload,
+  CardsParams,
+  CardsResponse,
+} from '@/features/cards/model/services/types.ts'
 import { baseAPI } from '@/services/base-api.ts'
 
 const cardsAPI = baseAPI.injectEndpoints({
@@ -19,7 +24,27 @@ const cardsAPI = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['Cards'],
     }),
+    getRandomCard: builder.query<Omit<Card, 'userId'>, { id: string; previousCardId?: string }>({
+      query: ({ id, previousCardId }) => ({
+        url: `v1/decks/${id}/learn`,
+        method: 'GET',
+        params: { previousCardId },
+      }),
+    }),
+    rateCard: builder.mutation<any, CardRatePayload>({
+      query: data => ({
+        url: `v1/decks/${data.cardId}/learn`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Cards'],
+    }),
   }),
 })
 
-export const { useGetCardsQuery, useDeleteCardMutation } = cardsAPI
+export const {
+  useGetCardsQuery,
+  useDeleteCardMutation,
+  useGetRandomCardQuery,
+  useRateCardMutation,
+} = cardsAPI
