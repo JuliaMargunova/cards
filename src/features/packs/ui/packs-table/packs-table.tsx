@@ -25,6 +25,11 @@ const columns = [
     key: 'created',
     title: 'Created By',
   },
+  {
+    key: 'controls',
+    title: '',
+    sortable: false,
+  },
 ]
 
 type Props = {
