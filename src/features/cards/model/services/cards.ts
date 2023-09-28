@@ -1,8 +1,9 @@
 import {
-  Card,
-  CardRatePayload,
   CardsParams,
+  CardResponse,
   CardsResponse,
+  CardRateRequest,
+  RandomCardRequest,
 } from '@/features/cards/model/services/types.ts'
 import { baseAPI } from '@/services/base-api.ts'
 
@@ -24,19 +25,30 @@ const cardsAPI = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['Cards'],
     }),
-    getRandomCard: builder.query<Omit<Card, 'userId'>, { id: string; previousCardId?: string }>({
+    getRandomCard: builder.query<CardResponse, RandomCardRequest>({
       query: ({ id, previousCardId }) => ({
         url: `v1/decks/${id}/learn`,
         method: 'GET',
         params: { previousCardId },
       }),
     }),
-    rateCard: builder.mutation<any, CardRatePayload>({
-      query: data => ({
-        url: `v1/decks/${data.cardId}/learn`,
+    rateCard: builder.mutation<CardResponse, CardRateRequest>({
+      query: ({ packId, ...rest }) => ({
+        url: `v1/decks/${packId}/learn`,
         method: 'POST',
-        body: data,
+        body: rest,
       }),
+      async onQueryStarted({ packId }, { dispatch, queryFulfilled }) {
+        try {
+          const { data: newCard } = await queryFulfilled
+
+          dispatch(
+            cardsAPI.util.updateQueryData('getRandomCard', { id: packId }, () => {
+              return newCard
+            })
+          )
+        } catch {}
+      },
       invalidatesTags: ['Cards'],
     }),
   }),
