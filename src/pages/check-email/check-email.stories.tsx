@@ -6,6 +6,11 @@ import { CheckEmail } from '@/pages'
 const meta: Meta = {
   title: 'Pages/Check Email',
   component: CheckEmail,
+  parameters: {
+    args: {
+      email: 'e-mail@example.com',
+    },
+  },
   tags: ['autodocs'],
   decorators: [BrowserRouterDecorator],
 } satisfies Meta<typeof CheckEmail>

@@ -1,6 +1,6 @@
 import { SVGProps, Ref, forwardRef, memo } from 'react'
 
-export const CheckEmailImage = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
+export const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
     width={96}
     height={96}
@@ -128,7 +128,7 @@ export const CheckEmailImage = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGE
     />
   </svg>
 )
-const ForwardRef = forwardRef(CheckEmailImage)
+const ForwardRef = forwardRef(SvgComponent)
 const Memo = memo(ForwardRef)
 
-export { Memo as ReactComponent }
+export { Memo as CheckEmailImage }

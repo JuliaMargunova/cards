@@ -14,17 +14,17 @@ export const CheckEmail = () => {
     <div className={s.container}>
       <Card>
         <div className={s.content}>
-          <Typography as="h2" variant="large">
-            Check your email
+          <Typography as="h2" variant="large" className={s.title}>
+            Check email
           </Typography>
-          <div>
+          <div className={s.imageContainer}>
             <CheckEmailImage />
           </div>
           <Typography variant="body2" className={s.notification}>
-            We have sent an e-mail with instructions to {email}
+            We’ve sent an Email with instructions to {email}
           </Typography>
-          <Button as={Link} to={'/sign-in'} variant="link" className={s.loggingIn}>
-            Try logging in
+          <Button fullWidth as={Link} to={'/sign-in'}>
+            Back to Sign in
           </Button>
         </div>
       </Card>
