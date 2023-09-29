@@ -11,13 +11,13 @@
 
       width: 20px;
       height: 20px;
-      margin: 300px auto;
+      margin: 10px auto;
 
       opacity: 0;
       background: var(--color-accent-700);
       border-radius: 50%;
 
-      animation: dotline-move 4s infinite;
+      animation: dotline-move 2.5s infinite;
 
       &:nth-child(1) {
         animation-delay: 0.8s;
