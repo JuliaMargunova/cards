@@ -2,7 +2,6 @@ import { ChangeEvent, useRef } from 'react'
 
 import { clsx } from 'clsx'
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
-import { z } from 'zod'
 
 import { Button, ButtonProps } from '@/components/ui/button'
 import s from '@/components/ui/file-uploader/file-uploader.module.scss'
@@ -11,6 +10,7 @@ import { Icon } from '@/components/ui/icon/icon.tsx'
 type Props<T extends FieldValues> = {
   control: Control<T>
   name: FieldPath<T>
+  extraActions?: () => void
 } & Omit<ButtonProps, 'type' | 'onClick'>
 
 export const ControlledFileUploader = <T extends FieldValues>({
@@ -18,18 +18,10 @@ export const ControlledFileUploader = <T extends FieldValues>({
   control,
   className,
   children,
+  extraActions,
   ...restProps
 }: Props<T>) => {
   const inputRef = useRef<HTMLInputElement>(null)
-
-  const scheme = z
-    .instanceof(File)
-    .refine(file => file.size <= 1000000, `Max image size is 1MB.`)
-    .refine(
-      file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type),
-      'Only .jpg, .jpeg, .png and .webp formats are supported.'
-    )
-    .optional()
 
   const {
     field: { onChange },
@@ -39,10 +31,8 @@ export const ControlledFileUploader = <T extends FieldValues>({
   })
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    const res = scheme.safeParse(file)
-
-    if (res) onChange(res)
+    onChange(e.target.files?.[0])
+    extraActions?.()
   }
 
   const classes = clsx(s.wrapper, className)
