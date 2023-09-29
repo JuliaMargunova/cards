@@ -15,19 +15,16 @@ import { useGetDeckInfoQuery } from '@/features/packs/model/services'
 export const Learn = () => {
   const [rateMode, setRateMode] = useState(false)
 
-  const [previousCardId, setPreviousCardId] = useState('')
-
   const [rateCard] = useRateCardMutation()
 
   const params = useParams()
   const id = params.id as string
   const { data: pack } = useGetDeckInfoQuery({ id })
-  const { data: card } = useGetRandomCardQuery({ id, previousCardId })
+  const { data: card } = useGetRandomCardQuery({ id })
 
   const onSubmit = (data: RateType) => {
     setRateMode(false)
-    setPreviousCardId(card!.id)
-    rateCard({ cardId: card!.id, grade: +data.grade })
+    rateCard({ packId: id, cardId: card!.id, grade: +data.grade })
   }
 
   return (
