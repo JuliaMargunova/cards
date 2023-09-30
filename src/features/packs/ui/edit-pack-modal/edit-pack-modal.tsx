@@ -10,7 +10,7 @@ type Props = {
   id: string
   name: string
   isPrivate: boolean
-  cover?: string
+  cover: string | null
 }
 
 export const EditPackModal: FC<Props> = ({ open, setOpen, id, name, isPrivate, cover }) => {

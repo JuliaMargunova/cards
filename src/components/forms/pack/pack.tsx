@@ -13,7 +13,7 @@ import { Icon } from '@/components/ui/icon/icon.tsx'
 import { Typography } from '@/components/ui/typography'
 
 type PackFormDV = {
-  cover?: string
+  cover: string | null
 } & Pick<PackFormType, 'name' | 'isPrivate'>
 
 type Props = {

@@ -16,8 +16,8 @@ import { Typography } from '@/components/ui/typography'
 type CardPropsDV = {
   question: string
   answer: string
-  questionImg?: string
-  answerImg?: string
+  questionImg: string | null
+  answerImg: string | null
 }
 
 type Props = {
