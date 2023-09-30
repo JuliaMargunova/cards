@@ -1,6 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import { CreateNewPassword, ForgotPassword, Learn, Pack, Packs, SignIn, SignUp } from '@/pages'
+import { CheckEmail } from '@/pages/check-email/check-email.tsx'
 import { Profile } from '@/pages/profile/profile.tsx'
 
 export const publicRoutes: RouteObject[] = [
@@ -19,6 +20,10 @@ export const publicRoutes: RouteObject[] = [
   {
     path: '/create-new-password',
     element: <CreateNewPassword />,
+  },
+  {
+    path: '/check-email/:email',
+    element: <CheckEmail />,
   },
 ]
 
