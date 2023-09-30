@@ -10,7 +10,7 @@ import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { DropDown, DropDownItem, DropDownItemWithIcon } from '@/components/ui/dropdown'
 import { Icon } from '@/components/ui/icon/icon.tsx'
-import { QueryLoader } from '@/components/ui/loading'
+//import { QueryLoader } from '@/components/ui/loading'
 import { Typography } from '@/components/ui/typography'
 
 type Props = {
@@ -64,7 +64,7 @@ export const Header: FC<Props> = memo(({ data, logout }) => {
           </Button>
         )}
       </div>
-      <QueryLoader />
+      {/*<QueryLoader />*/}
     </div>
   )
 })
