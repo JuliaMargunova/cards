@@ -10,7 +10,7 @@ import { Icon } from '@/components/ui/icon/icon.tsx'
 type Props<T extends FieldValues> = {
   control: Control<T>
   name: FieldPath<T>
-  extraActions?: () => void
+  extraActions?: (inputName: string) => void
 } & Omit<ButtonProps, 'type' | 'onClick'>
 
 export const ControlledFileUploader = <T extends FieldValues>({
@@ -32,7 +32,7 @@ export const ControlledFileUploader = <T extends FieldValues>({
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.files?.[0])
-    extraActions?.()
+    extraActions?.(name)
   }
 
   const classes = clsx(s.wrapper, className)

@@ -12,13 +12,13 @@ import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon/icon.tsx'
 import { Typography } from '@/components/ui/typography'
 
-type CardFormDV = {
+type PackFormDV = {
   cover?: string
 } & Pick<PackFormType, 'name' | 'isPrivate'>
 
 type Props = {
   onSubmit: (data: FormData) => void
-  defaultValues?: CardFormDV
+  defaultValues?: PackFormDV
   onCancel: () => void
 }
 

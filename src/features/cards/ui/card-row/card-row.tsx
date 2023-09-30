@@ -9,6 +9,7 @@ import { Rating } from '@/components/ui/rating'
 import { Table } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
 import { Card, useDeleteCardMutation } from '@/features/cards/model/services'
+import { EditCardModal } from '@/features/cards/ui'
 
 type Props = {
   card: Card
@@ -17,7 +18,7 @@ type Props = {
 
 export const CardRow: FC<Props> = memo(({ card, isMyPack }) => {
   const [deleteIsOpen, setDeleteIsOpen] = useState(false)
-  //const [editIsOpen, setEditIsOpen] = useState(false)
+  const [editIsOpen, setEditIsOpen] = useState(false)
 
   const [deleteCard] = useDeleteCardMutation()
 
@@ -36,7 +37,15 @@ export const CardRow: FC<Props> = memo(({ card, isMyPack }) => {
         setOpen={setDeleteIsOpen}
         onConfirm={onConfirm}
       />
-      {/*<EditPackModal open={editIsOpen} setOpen={setEditIsOpen} pack={card} />*/}
+      <EditCardModal
+        open={editIsOpen}
+        setOpen={setEditIsOpen}
+        cardId={card.id}
+        question={card.question}
+        questionImg={card.questionImg}
+        answer={card.answer}
+        answerImg={card.answerImg}
+      />
 
       <Table.Row key={card.id}>
         <Table.Cell>
@@ -64,7 +73,7 @@ export const CardRow: FC<Props> = memo(({ card, isMyPack }) => {
             <div className={s.buttons}>
               <IconButton
                 icon={<Icon name={'edit'} width={16} height={16} />}
-                // onClick={() => ()}
+                onClick={() => setEditIsOpen(true)}
                 small
               />
               <IconButton
