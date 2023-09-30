@@ -1,4 +1,11 @@
-import { LoginArgs, LoginResponse, ProfileResponse, UpdateProfileFormData } from '../types.ts'
+import {
+  LoginArgs,
+  LoginResponse,
+  ProfileResponse,
+  SignUpArgs,
+  SignUpResponse,
+  UpdateProfileFormData,
+} from '../types.ts'
 
 import { baseAPI } from '@/services/base-api.ts'
 
@@ -45,8 +52,21 @@ const authAPI = baseAPI.injectEndpoints({
       }),
       invalidatesTags: ['Me'],
     }),
+    signUp: builder.mutation<SignUpResponse, SignUpArgs>({
+      query: ({ ...args }) => ({
+        url: `/v1/auth/sign-up`,
+        method: 'POST',
+        body: { ...args },
+      }),
+      invalidatesTags: ['Me'],
+    }),
   }),
 })
 
-export const { useGetMeQuery, useLoginMutation, useLogoutMutation, useUpdateProfileMutation } =
-  authAPI
+export const {
+  useGetMeQuery,
+  useLoginMutation,
+  useLogoutMutation,
+  useUpdateProfileMutation,
+  useSignUpMutation,
+} = authAPI

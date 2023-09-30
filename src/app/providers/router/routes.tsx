@@ -1,6 +1,6 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
-import { CreateNewPassword, ForgotPassword, Learn, Pack, Packs, SignIn, SignUp } from '@/pages'
+import { CreateNewPassword, ForgotPassword, Learn, Pack, Packs, SignIn, SignUpPage } from '@/pages'
 import { CheckEmail } from '@/pages/check-email/check-email.tsx'
 import { Profile } from '@/pages/profile/profile.tsx'
 
@@ -11,7 +11,7 @@ export const publicRoutes: RouteObject[] = [
   },
   {
     path: '/sign-up',
-    element: <SignUp />,
+    element: <SignUpPage />,
   },
   {
     path: '/recover-password',
