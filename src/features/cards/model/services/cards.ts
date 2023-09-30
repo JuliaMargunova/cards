@@ -47,8 +47,26 @@ const cardsAPI = baseAPI.injectEndpoints({
               return newCard
             })
           )
-        } catch {}
+        } catch (e) {
+          console.log(e)
+        }
       },
+      invalidatesTags: ['Cards'],
+    }),
+    createCard: builder.mutation<CardResponse, { packId: string; data: FormData }>({
+      query: ({ packId, data }) => ({
+        url: `v1/decks/${packId}/cards`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Cards'],
+    }),
+    updateCard: builder.mutation<CardResponse, { cardId: string; data: FormData }>({
+      query: ({ cardId, data }) => ({
+        url: `v1/cards/${cardId}`,
+        method: 'PATCH',
+        body: data,
+      }),
       invalidatesTags: ['Cards'],
     }),
   }),
@@ -59,4 +77,6 @@ export const {
   useDeleteCardMutation,
   useGetRandomCardQuery,
   useRateCardMutation,
+  useCreateCardMutation,
+  useUpdateCardMutation,
 } = cardsAPI
