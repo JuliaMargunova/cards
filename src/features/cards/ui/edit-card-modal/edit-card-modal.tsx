@@ -9,9 +9,9 @@ type Props = {
   setOpen: (value: boolean) => void
   cardId: string
   question: string
-  questionImg?: string
+  questionImg: string | null
   answer: string
-  answerImg?: string
+  answerImg: string | null
 }
 
 export const EditCardModal: FC<Props> = ({
