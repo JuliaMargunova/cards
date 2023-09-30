@@ -27,7 +27,7 @@ export const WithPicture: Story = {
       alert(JSON.stringify(data))
     }
 
-    return <CardForm onSubmit={onSubmit} onCancel={() => alert('Cancel')} withPicture />
+    return <CardForm onSubmit={onSubmit} onCancel={() => alert('Cancel')} />
   },
   args: {} as any,
 }
