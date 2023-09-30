@@ -14,12 +14,15 @@ import { Typography } from '@/components/ui/typography'
 import { useGetMeQuery } from '@/features/auth'
 import { ProfileResponse } from '@/features/auth/model/types.ts'
 import { useGetCardsQuery } from '@/features/cards/model/services'
+import { CreateCardModal } from '@/features/cards/ui'
 import { CardsTable } from '@/features/cards/ui/cards-table/cards-table.tsx'
 import { useGetDeckInfoQuery } from '@/features/packs/model/services'
 import { EditPackModal } from '@/features/packs/ui'
 
 export const Pack = () => {
   const navigate = useNavigate()
+
+  const [createIsOpen, setCreateIsOpen] = useState(false)
 
   const { id: packId } = useParams()
   const { data: pack, isLoading: packLoading } = useGetDeckInfoQuery({ id: packId as string })
@@ -58,14 +61,17 @@ export const Pack = () => {
   return (
     <section className={s.root}>
       {pack && (
-        <EditPackModal
-          open={editIsOpen}
-          setOpen={setEditIsOpen}
-          id={pack.id}
-          name={pack.name}
-          isPrivate={pack.isPrivate}
-          cover={pack.cover}
-        />
+        <>
+          <CreateCardModal open={createIsOpen} setOpen={setCreateIsOpen} packId={pack.id} />
+          <EditPackModal
+            open={editIsOpen}
+            setOpen={setEditIsOpen}
+            id={pack.id}
+            name={pack.name}
+            isPrivate={pack.isPrivate}
+            cover={pack.cover}
+          />
+        </>
       )}
       <Button as={Link} to="/packs" variant="link" className={s.button}>
         <Icon name={'arrow-back'} width={22} height={22} />
@@ -94,7 +100,7 @@ export const Pack = () => {
             )}
           </Typography>
           {isMyPack ? (
-            <Button onClick={() => alert('add card')}>Add New Card</Button>
+            <Button onClick={() => setCreateIsOpen(true)}>Add New Card</Button>
           ) : (
             <Button as={Link} to={`./learn`}>
               Learn Cards
